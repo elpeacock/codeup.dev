@@ -1,0 +1,20 @@
+.fancy-header {
+    color: blue;
+    text-decoration: underline;
+}
+
+/*
+selecting element by class, begin with a .
+selecting element by id, begin with a #
+selecting by element, use the actual kind of element
+selecting by decendant, target with a class name then the element
+targeting a direct child use element/class/id of the element + '>'
+
+Pseudoselectors - used for links
+ syntax....name of element: +action 
+ (like visited link, hovering over a link or an active link);
+
+specificity
+  more specific the selectors = the higher precedence
+  	element>class>id (least to most specific) 
+*/

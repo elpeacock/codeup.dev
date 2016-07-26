@@ -1,0 +1,58 @@
+h1 {
+	color: hotpink;
+	text-decoration: underline;
+	text-align: center;
+
+
+}
+h2 {
+	color: darkcyan;
+	text-decoration: underline;
+	
+}
+body {
+	background-color: papayawhip;
+	font-family: 'Raleway', sans-serif;
+	background-image: url(/img/upfeathers.png);
+}
+strong {
+	color: purple;
+}
+table {
+	text-align: center;
+}
+th {
+	font-weight: bold;
+}
+a:link {
+	color: DarkGreen;
+}
+a:visited {
+	color: CadetBlue;
+}
+a:active {
+	color: coral;
+}
+a:hover {
+	color: cornflowerblue;
+}
+.item {
+	border: 0px;
+	padding: 20px;
+	margin: 0px;
+}
+#lamp {
+	content: auto;
+}
+#food {
+	margin-left: 30px;
+	content: auto;
+}
+#questions {
+	margin-left: 60px;
+	content: auto;
+}
+#quote {
+	margin-left: 90px;
+	content: auto;
+}
