@@ -1,1 +1,15 @@
 .DS_Store
+
+
+public/bootstrap-3.3.6-dist/
+public/bootstrap.html
+public/css/bootstrap-theme.css
+public/css/bootstrap-theme.css.map
+public/css/bootstrap-theme.min.css
+public/css/bootstrap-theme.min.css.map
+public/css/bootstrap.css.map
+public/css/bootstrap.min.css
+public/css/bootstrap.min.css.map
+public/external_css.css
+public/index.php
+public/js/
