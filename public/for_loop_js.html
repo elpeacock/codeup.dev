@@ -6,20 +6,20 @@
 <body>
     <h1>Check yo console....</h1>
 
-
     <script>
+    
     "use strict"
     for (var i = 1; i <= 10; i += 1) {
         var iToString = i.toString();
         iToString = iToString.replace("10", "0");
         console.log (iToString.repeat(i));  
     }
-
+//----------------------------------------------------------------------------------------------//
     var generatedNumber = Math.floor(Math.random() * 10) + 1;
     for (var i = 1; i <= 10; i += 1) {
         console.log (generatedNumber + " x " + i + " = " + (generatedNumber * i));
     }
-
+//----------------------------------------------------------------------------------------------//
     for (var i = 1; i <= 10; i += 1) {
         var numbers = Math.floor(Math.random() * 180) + 20;
         if (numbers % 2 == 0) {
@@ -28,10 +28,11 @@
             console.log (numbers + ": is odd")
         }
     }
-
+//-----------------------------------------------------------------------------------------------//
     for (var j = 100; j > 0; j -= 5){
         console.log (j);
     }
+
     </script>
 </body>
 </html>

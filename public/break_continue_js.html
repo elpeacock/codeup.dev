@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>break continue exercise</title>
+</head>
+<body>
+	<h1>check yo console...</h1>
+
+	<script>
+		
+	var numberToSkip = Math.floor((Math.random()*50)+1);
+	console.log("this is the number to skip: " + numberToSkip)
+	
+	for (var i = 1; i < 50; i++) {
+        if (numberToSkip == i) {
+            console.log("skipping: " + numberToSkip);
+            continue;
+        }
+        if (i % 2 != 0) {
+            console.log("here is an odd number: " + i);
+        }
+    }
+    
+    
+	</script>
+</body>
+</html>
