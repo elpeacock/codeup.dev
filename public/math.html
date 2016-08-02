@@ -1,114 +1,179 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Math Function Exercises</title>
+    <title>Math Function Exercises</title>
 </head>
 <body>
-	<h1>Check Yo Console...</h1>
+    <h1>Hey! Lets do some Maths!!</h1>
 
-	<script>
-		//sum 2 numbers
-		function sum (value1, value2) {
-			var total = value1 + value2;
-			if (isNumeric (value1) && isNumeric (value2)){
-				return total;
-			} else {
-				return "inputs must be numeric";
-			}
-		}
-		console.log (sum (3, 5));
-		console.log (sum (4, 7));
-		console.log (sum (2, 9));
-		console.log ("\n")
+    <script>
+    "use strict"
+    (function() {
 
-		//subtract 2 numbers
-		function subtract (value1, value2) {
-			var answer = value1 - value2;
-			if (isNumeric (value1) && isNumeric (value2)){
-				return answer;
-			} else {
-				return "inputs must be numeric";
-			}
-		}
-		console.log (subtract (5, 7));
-		console.log (subtract (19, 3));
-		console.log (subtract (22, 9));
+        //sum 2 numbers
+        function sum (value1, value2) {
+            var total = value1 + value2;
+            if (isNumeric (value1) && isNumeric (value2)){
+                return total;
+            } else {
+                return "inputs must be numeric";
+            }
+        }
+        console.log (sum (3, 5));
+        console.log (sum (4, 7));
+        console.log (sum (2, 9));
+        console.log ("\n")
 
-		//multiply 2 numbers
-		function multiply (value1, value2) {
-			var answer = value1 * value2;
-			if (isNumeric (value1) && isNumeric (value2)){
-				return answer;
-			} else {
-				return "inputs must be numeric";
-			}
-		}
-		console.log ("\n");
-		console.log (multiply (3, 4));
-		console.log (multiply (5, 9));
-		console.log (multiply (123, 546));
+        //subtract 2 numbers
+        function subtract (value1, value2) {
+            var answer = value1 - value2;
+            if (isNumeric (value1) && isNumeric (value2)){
+                return answer;
+            } else {
+                return "inputs must be numeric";
+            }
+        }
+        console.log (subtract (5, 7));
+        console.log (subtract (19, 3));
+        console.log (subtract (22, 9));
 
-		//divide 2 numbers
-		function divide (value1, value2) {
-			if (isNumeric (value1) && isNumeric (value2)){
-			var answer = value1 / value2;
-				if (value2 == 0) {
-					return "cannot divide by 0";
-				} else {
-					return answer;
-				}
-			} else {
-				return "inputs must be numeric";
-			}
-		}
-		console.log ("\n");
-		console.log (divide (73, 5));
-		console.log (divide (4, 2));
-		console.log (divide (6, 0));
+        //multiply 2 numbers
+        function multiply (value1, value2) {
+            var answer = value1 * value2;
+            if (isNumeric (value1) && isNumeric (value2)){
+                return answer;
+            } else {
+                return "inputs must be numeric";
+            }
+        }
+        console.log ("\n");
+        console.log (multiply (3, 4));
+        console.log (multiply (5, 9));
+        console.log (multiply (123, 546));
 
-		//square a number
-		function squareANumber (value1) {
-			if (isNumeric (value1)){
-				return multiply (value1, value1);
-			} else {
-				return "inputs must be numeric";
-			}
-		}
-		console.log ("\n");
-		console.log (squareANumber (10));
-		console.log (squareANumber (3));
-		console.log (squareANumber (5));
+        //divide 2 numbers
+        function divide (value1, value2) {
+            if (isNumeric (value1) && isNumeric (value2)){
+            var answer = value1 / value2;
+                if (value2 == 0) {
+                    return "cannot divide by 0";
+                } else {
+                    return answer;
+                }
+            } else {
+                return "inputs must be numeric";
+            }
+        }
+        console.log ("\n");
+        console.log (divide (73, 5));
+        console.log (divide (4, 2));
+        console.log (divide (6, 0));
 
-		//sum of two squares
-		function sumOfSquares (value1, value2) {
-			var squareValue1 = multiply (value1, value1);
-			var squareValue2 = multiply (value2, value2);
-			if (isNumeric (value1) && isNumeric (value2)){
-				return sum (squareValue1, squareValue2);
-			} else {
-				return "inputs must be numeric";
-			}
-		}
-		console.log ("\n");
-		console.log (sumOfSquares (3, 6));
-		console.log (sumOfSquares (4, 12));
-		console.log (sumOfSquares (5, 2));
+        //square a number
+        function squareANumber (value1) {
+            if (isNumeric (value1)){
+                return multiply (value1, value1);
+            } else {
+                return "inputs must be numeric";
+            }
+        }
+        console.log ("\n");
+        console.log (squareANumber (10));
+        console.log (squareANumber (3));
+        console.log (squareANumber (5));
 
-		//function that returns a boolean
-		function isNumeric (value) {
-			if (isNaN (value)) {
-				return false;
-			} else {
-				return true;
-			}
-		}
-		console.log ("\n");
-		console.log (isNumeric ("astf"));
-		console.log (isNumeric (17));
-		console.log (isNumeric ("blah17"));
+        //sum of two squares
+        function sumOfSquares (value1, value2) {
+            var squareValue1 = multiply (value1, value1);
+            var squareValue2 = multiply (value2, value2);
+            if (isNumeric (value1) && isNumeric (value2)){
+                return sum (squareValue1, squareValue2);
+            } else {
+                return "inputs must be numeric";
+            }
+        }
+        console.log ("\n");
+        console.log (sumOfSquares (3, 6));
+        console.log (sumOfSquares (4, 12));
+        console.log (sumOfSquares (5, 2));
+
+        //function that returns a boolean
+        function isNumeric (value) {
+            if (isNaN (value)) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+        console.log ("\n");
+        console.log (isNumeric ("astf"));
+        console.log (isNumeric (17));
+        console.log (isNumeric ("blah17"));
+
+        //function that averages 3 numbers
+        function averageOfThree (value1, value2, value3) {
+            var answer = (value1 + value2 + value3) / 3;
+            if (isNumeric (value1) && isNumeric (value2) && isNumeric (value3)){
+                return answer;
+            } else {
+                return "inputs must be numeric";
+            }
+        }
+        console.log ("\n");
+        console.log (averageOfThree (43, 72, 99));
+        console.log (averageOfThree (64, 987, 540));
+        console.log (averageOfThree (777, 555, 888));
 
 
+        //user interaction maths!!
+        var whatMathShouldWeDo = prompt ("Do you want to add, subtract, mutiply, divide, square, or average?");
+        if (whatMathShouldWeDo == "add") {
+            var value1 = prompt ("enter the first number");
+            value1 = parseInt (value1);
+            
+            var value2 = prompt ("enter the second number");
+            value2 = parseInt (value2);
+            
+            sum (value1, value2);
+            alert ("The sum of " + value1 + " & " + value2 + " equals " + sum (value1, value2));
+        } else if (whatMathShouldWeDo == "subtract") {
+            var value1 = prompt ("enter the first number");
+            value1 = parseInt (value1);
+            var value2 = prompt ("enter the second number");
+            value2 = parseInt (value2);
+            subtract (value1, value2);
+            alert ("The total of " + value1 + " minus " + value2 + " equals " + subtract (value1, value2));
+        } else if (whatMathShouldWeDo == "multiply") {
+            var value1 = prompt ("enter the first number");
+            value1 = parseInt (value1);
+            var value2 = prompt ("enter the second number");
+            value2 = parseInt (value2);
+            multiply (value1, value2);
+            alert ("The total of " + value1 + " times " + value2 + " equals " + multiply (value1, value2));
+        } else if (whatMathShouldWeDo == "divide") {
+            var value1 = prompt ("enter the first number");
+            value1 = parseInt (value1);
+            var value2 = prompt ("enter the second number");
+            value2 = parseInt (value2);
+            divide (value1, value2);
+            alert ("The total of " + value1 + " divided by " + value2 + " equals " + divide (value1, value2));
+        } else if (whatMathShouldWeDo == "square") {
+            var value1 = prompt ("enter the number to square");
+            value1 = parseInt (value1);
+            squareANumber (value1);
+            alert ("The square of " + value1 + " is " + squareANumber (value1));
+        } else if (whatMathShouldWeDo == "average") {
+            var value1 = prompt ("enter the first number");
+            value1 = parseInt (value1);
+            var value2 = prompt ("enter the second number");
+            value2 = parseInt (value2);
+            var value3 = prompt ("enter a third number");
+            value3 = parseInt (value3);
+            averageOfThree (value1, value2, value3);
+            alert ("The average of " + value1 + ", " + value2 + " & " + value3 + " equals " + averageOfThree (value1, value2, value3));
+        }
 
-	</script>
+    })();
+    </script>
 </body>
 </html>

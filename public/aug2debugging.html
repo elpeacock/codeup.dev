@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>debug exercise</title>
+</head>
+<body>
+    <h1>it's in the console, bro...</h1>
+
+    <script>
+    'use strict';
+
+    function sayHello (name) {
+        return 'hello ' + name;
+    }
+
+    console.log (sayHello('zach'));
+
+    // expect to see 'hello zach' in the console
+
+    // ----------------------------------------------------------------------------
+
+    function sayHelloToEveryoneExceptZach (name) {
+        if (name == 'zach') {
+            return 'goodbye';
+        } else {
+            return 'hello ' + name;
+        }
+    }
+
+    console.log (sayHelloToEveryoneExceptZach('Ryan'));
+
+    // expect to see 'hello Ryan' in the console
+
+    // ----------------------------------------------------------------------------
+
+    // returns a random number between 1 and 100
+
+    function getRandomNumber () {
+        Math.floor(Math.random() * 100) + 1;
+    }
+    console.log (getRandomNumber());  
+    // returns true if number is odd, otherwise false
+    function isOdd (number) {
+        return number % 2 == 1;
+    }
+
+    var rand = getRandomNumber();
+
+    if (isOdd(rand)) {
+        console.log(rand + ' is odd');
+    } else {
+        console.log(rand + 'is not odd');
+    }
+
+    // expect to see '4 is not odd'
+
+    // ----------------------------------------------------------------------------
+
+    for (var i = 1; i <= 10; i += 1) {
+        console.log(i);
+    }
+
+    // expect to see 1 through 10
+
+    // ----------------------------------------------------------------------------
+
+    for (var i = 10; i > 0; i -= 1) {
+        console.log(i);
+    }
+
+    // expect to see 10 through 1
+
+    // ----------------------------------------------------------------------------
+
+    function sum (x, y) {
+        return x + y;
+    }
+
+
+    console.log (sum(3, 5));
+
+    // expect to see 8
+
+
+
+    </script>
+</body>
+</html>
