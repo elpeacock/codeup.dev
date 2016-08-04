@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>extra objects exercise</title>
+</head>
+<body>
+    <h1>JSON says check the console.</h1>
+
+    <script>
+        var student = {
+            "name": "Bob",
+            "pizzaPreference": "black olives and mushrooms",
+            "grades": {
+                "html": [90, 77],
+                "css":  [82],
+                "js":   [91, 90, 89]
+            },
+            "languages": [
+                "html", "css", "js"
+            ],
+            "cars": [
+                {
+                    "make":  "honda",
+                    "model": "civic",
+                    "parkingPermits": [
+                        {"name": "Travis Park Garage", "isActive": true},
+                        {"name": "Apartment Complex",  "isActive": false}
+                    ]
+                },
+                {
+                    "make":  "honda",
+                    "model": "accord",
+                    "parkingPermits": []
+                }
+            ]
+        };
+
+//   Task                                                        Output
+//   ----                                                        ------
+// get Bob's name .............................................. 'Bob'
+console.log("The student's name is " + student.name);
+// get Bob's pizzaPreference ................................... 'black olives and mushrooms'
+console.log (student.name + "'s favorite pizza is " + student.pizzaPreference + ".");
+// get Bob's 2nd language ...................................... 'css'
+console.log (student.name + " can speak " + student.languages[1] + ".");
+// get Bob's grades for html ................................... [90, 77]
+console.log (student.name + " got these grades in html: " + student.grades.html + ".");
+// get Bob's last grade for javascript ......................... 89
+console.log ("On his most recent javascript lesson, " + student.name + " got an " + student.grades.js[student.grades.js.length - 1] + ".");
+// get Bob's first language .................................... 'html'
+console.log (student.name + " can also speak " + student.languages[0] + ".");
+// get the make of Bob's second car ............................ honda
+console.log (student.name + " has two cars, his second car is a " + student.cars[1].make + ".");
+// number of parking permits for Bob's civic ................... 2
+console.log (student.name + " has " + student.cars[0].parkingPermits.length + " parking permits for his Civic.");
+//                           for Bob's accord .................. 0
+console.log ("He has " + student.cars[1].parkingPermits.length + " parking permits for his Accord.");
+// find out if Bob's parking permit for travis park is active .. true
+console.log ("Is " + student.name + "'s parking permit for Travis Park Garage active?  " + student.cars[0].parkingPermits[0].isActive + ", his permit is active." );
+// find the average of Bob's grades for html (your solution should   not break if more items are added to the grades.html array)
+var gradeAverageHtml;
+var total = 0;
+for (var i = 0; i < student.grades.html.length; i++) {
+    total += student.grades.html[i];
+};
+var gradeAverageHtml = total / student.grades.html.length;
+console.log (student.name + "'s average on HTML is " + gradeAverageHtml);
+
+
+
+
+
+
+    </script>
+</body>
+</html>

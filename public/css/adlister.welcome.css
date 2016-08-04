@@ -25,9 +25,9 @@ body {
 .img-hover:hover {
     opacity: 0.8;
 }
-.container {
+/*.container {
 
-}
+}*/
 .navbar-inverse .navbar-nav > li > a {
     color: black;
     font-weight: bold;
@@ -45,7 +45,9 @@ body {
     background-color: #72998A;
 }
 .portfolio-item {
-    margin-bottom: 25px;
+    margin-bottom: 30px;
+
+
 }
 
 /*Body Styles*/
@@ -68,6 +70,17 @@ small {
     color: white !important;
 }
 
+.item-description {
+    background-color: rgba(255, 255, 255, 0.5);
+    border: 2px solid black;
+    border-radius: 2%;
+    margin-top: 15px;
+    text-align: center;
+
+}
+h3 > a {
+    color: black;
+}
 /* 404 Page Styles */
 
 .welcome {
