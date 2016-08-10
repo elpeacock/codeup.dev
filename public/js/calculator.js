@@ -1,6 +1,6 @@
 "use strict"
 // (function (){
-
+var alreadyTotaled = false;
 ////////////add event listeners to each number button/////////////////// 
 
 var numbers = document.getElementsByClassName('number');
@@ -15,12 +15,17 @@ var rightInput = document.getElementById("rightInput");
 
 function clickNumber() {
     var buttonValue = this.value;
-    if (operatorInput.value === "") {
-        leftInput.value = leftInput.value + buttonValue;
+    if (alreadyTotaled == false) {
+        if (operatorInput.value === "") {
+            leftInput.value = leftInput.value + buttonValue;
+        } else {
+            rightInput.value = rightInput.value + buttonValue;
+        }
     } else {
-        rightInput.value = rightInput.value + buttonValue;
+        alreadyTotaled = false;
+        leftInput.value = buttonValue;
     }
-    // if (leftInput.value = total && operatorInput.value === ""){
+    // if (leftInput.value == total && operatorInput.value === ""){
     //     leftInput.value = buttonValue;
     // }
 }
@@ -78,15 +83,16 @@ document.getElementById("total").addEventListener("click", clickEqual);
 function clickEqual() {
     var operator = document.getElementById("total");
     var total;
+    alreadyTotaled = true;
     switch (operatorInput.value) {
         case "+": 
-            total = parseFloat(leftInput.value).toFixed(5) + parseFloat(rightInput.value).toFixed(5);
+            total = parseFloat(leftInput.value) + parseFloat(rightInput.value);
             break; 
         case "-": 
-            total = parseFloat(leftInput.value).toFixed(5) - parseFloat(rightInput.value).toFixed(5);
+            total = parseFloat(leftInput.value) - parseFloat(rightInput.value);
             break;
         case "x":
-            total = parseFloat(leftInput.value).toFixed(5) * parseFloat(rightInput.value).toFixed(5);
+            total = parseFloat(leftInput.value) * parseFloat(rightInput.value);
             break;
         case "/":
             if (rightInput.value == 0) {
@@ -94,7 +100,7 @@ function clickEqual() {
                 total = "";
                 return;
             }   
-            total = parseFloat(leftInput.value).toFixed(5) / parseFloat(rightInput.value).toFixed(5);
+            total = parseFloat(leftInput.value) / parseFloat(rightInput.value);
             break;
         case "√":
             if (leftInput.value < 0) {
@@ -102,13 +108,13 @@ function clickEqual() {
                 total = "";
                 return;
             }
-            total = Math.sqrt(parseFloat(leftInput.value).toFixed(5));
+            total = Math.sqrt(parseFloat(leftInput.value));
             break;
         case "%":
             if (leftInput.value > 0 && leftInput.value < 1) {
                 total = parseFloat(leftInput.value) * 100;
             } else if (leftInput.value > 1) {
-                total = parseFloat(leftInput.value).toFixed(2) / 100;
+                total = parseFloat(leftInput.value) / 100;
             }
             break;
     }
