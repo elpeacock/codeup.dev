@@ -1,0 +1,85 @@
+body {
+    font-family: fantasy;
+}
+button {
+    cursor: pointer;
+    padding: 18px 0;
+    margin: 5px;
+    font-family: inherit;
+    font-size: 30px;
+    border: 1px solid black;
+    border-radius: 5%;
+    display: inline-block;
+    text-align: center;
+    width: 105px;
+    -webkit-box-shadow: 0 0 4px rgba(0,0,0, .75);
+    -moz-box-shadow: 0 0 4px rgba(0,0,0, .75);
+    box-shadow: 0 0 4px rgba(0,0,0, .75);
+}
+button:hover, button:focus {
+    background-color: #57686E; /*make the background a little darker*/
+    color: white;
+    /*reduce the drop shadow size to give a pushed button effect*/
+    -webkit-box-shadow: 0 0 1px rgba(0,0,0, .75);
+    -moz-box-shadow: 0 0 1px rgba(0,0,0, .75);
+    box-shadow: 0 0 1px rgba(0,0,0, .75);
+}
+h1{
+    text-align: center;
+}
+.container {
+    background-color: lightgray;
+    border-radius: 5%;
+    border: 2px solid black;
+    font-family: inherit;
+    margin: 0 auto;
+    height: 600px;
+    width: 500px;
+
+
+}
+.input {
+    padding-top: 30px;
+    text-align: center;
+
+}
+.inputbox {
+    background-color: #57686E;
+    color: white;
+    font-size: 30px;
+    height: 55px;
+    font-family: inherit;
+    border-radius: 3%;
+    
+}
+.extras {
+    padding-top: 10px;
+    text-align: center;
+}
+.row1 {
+    /*padding-top: 10px;*/
+    text-align: center;
+}
+.row2 {
+    text-align: center;
+}
+.row3 {
+    text-align: center;
+}
+.row4 {
+    text-align: center;
+    padding-bottom: 10px;
+}
+.bonus {
+    background-color: #61A4BA !important;
+}
+.number {
+    background-color: #679E7B;
+}
+.operator {
+    background-color: #B85E83;
+}
+.special {
+    background-color: #454673;
+    color: white;
+}
