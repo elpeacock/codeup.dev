@@ -3,12 +3,22 @@
 $(document).ready(function(){
     alert("the DOM is dominating");
 
-$('li').css('font-size', '20px');
+$("h1").click(function(){
+    $(this).css("background-color", "green");
+});
 
-$('h1, li, p').css('background-color', 'yellow');
+$("p").dblclick(function(){
+    $("p").css("font-size", "18px");
+});
 
-var contents;
-contents = $('h1').text();
-alert(contents);
+$("li").hover(
+    function(){
+        $(this).css("color", "red");
+    }, 
+    function(){
+        $(this).css("color", "black");
+    }
+);
+
 
 });
