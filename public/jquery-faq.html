@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>National Parks FAQ exercise</title>
+    <style type="text/css">
+        
+        .invisible{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Make the most out of your trip to a National Park</h1>
+    <h2>New Rule: Don't be an idiot</h2>
+    <dl>
+        <dt>Can I feed the animals?</dt>
+        <dd>DO NOT EVER feed wild animals. They are wild animals, you will be putting yourself in danger as well as endangering the animals by increasing their reliance on human interaction.</dd>
+        <dt>Can I take the animals home?</dt>
+        <dd>NO!!!!!!! See this link for more information about what happens when people interfere with wildlife. <a href="http://www.yellowstonepark.com/bison-calf-put-in-car/">Do Not Take the Animals home!</a></dd>
+        <dt>Can I hike off trail?</dt>
+        <dd>It depends on what National Park you are visiting, however off-trail hiking is not encouraged.<a href="http://www.tetongravity.com/story/news/yellowstone-bros-have-history-of-national-park-abuse">Don't be the "Yellowstone Bros" who walked on the Grand Prismatic Spring</a></dd>
+        <dt>Can I camp in a National Park?</dt>
+        <dd>Some National Parks have designated campgrounds, these designated campgrounds are the ONLY areas where camping is allowed.</dd>
+        <dt>How much does it cost to enter a National Park?</dt>
+        <dd>Fees vary from park to park and on the size of your vehicle. Check the fees for the specific National Park you intend to visit in order to be sure</dd>
+        <dt>Can I bring my pets?</dt>
+        <dd>This varies from park to park, but pets are generally allowed in Campgrounds and on-trail but MUST be on a leash no longer than 6 ft. They are not allowed off-trail.</dd>
+        <dt>Do you offer Annual Passes?</dt>
+        <dd>The National Park Service does offer Annual passes for individual parks, as well as passes that are good at all National Parks. They also offer a lifetime pass.</dd>
+        <dt>What is the largest National Park?</dt>
+        <dd>The largest National Park is the Wrangell-St.Elias National Park and Preserve in Alaska at 13.2 million acres.</dd>
+        <dt>What is the smallest National Park?</dt>
+        <dd>The smallest National Park is the Thaddeus Kosciuszko National Memorial in Pennsylvania at 0.02 acres.</dd>
+        <dt>How old is the National Park Service?</dt>
+        <dd>The National Park Service was created by President Woodrow Wilson on August 25, 1916 and is celebrating it's Centennial Anniversary this year. </dd>
+    </dl>
+    <a href="#" id="show-answers">Click to show answers</a>
+
+    <script type="text/javascript" src="js/jquery-useme.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('dd').addClass('invisible');
+
+            $('#show-answers').click(function() {
+                $('dd').toggleClass('invisible');
+            });
+        });
+    </script>
+</body>
+</html>
