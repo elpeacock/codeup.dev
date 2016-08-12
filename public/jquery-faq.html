@@ -4,9 +4,6 @@
     <title>National Parks FAQ exercise</title>
     <style type="text/css">
         
-        .invisible{
-            display: none;
-        }
     </style>
 </head>
 <body>
@@ -59,10 +56,10 @@
     <script type="text/javascript" src="js/jquery-useme.js"></script>
     <script type="text/javascript">
         $(document).ready(function() {
-            $('dd').addClass('invisible');
+            $('dd').toggle();
 
             $('#show-answers').click(function() {
-                $('dd').toggleClass('invisible');
+                $('dd').toggle();
             });
 
             $('ul').each(function() {
@@ -70,7 +67,7 @@
             });
 
             $('li').click(function(){
-                $(this).parent().addClass('invisible');
+                $(this).parent().hide();
             });
 
             // $('h3').each(function() {
