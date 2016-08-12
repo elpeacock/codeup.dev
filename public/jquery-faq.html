@@ -2,9 +2,7 @@
 <html>
 <head>
     <title>National Parks FAQ exercise</title>
-    <style type="text/css">
-        
-    </style>
+
 </head>
 <body>
     <h1>Make the most out of your trip to a National Park</h1>
@@ -33,48 +31,43 @@
     </dl>
     <a href="#" id="show-answers">Click to show answers</a>
     <h3>Grand Teton National Park</h3>
-        <ul>
-            <li>Entrance Fee: Private Vehicle - $30.00 for 7 days</li>
-            <li>Does offer campground areas on a first come, first served basis, no advanced reservations, maximum stay of 14 days at all areas except Jenny Lake (7 day max)</li>
-            <li>Leashed pets are allowed in the park but are not allowed on any multi-use pathways within the park, or in the backcountry, or buildings.</li>
-            <li>Contact Grand Teton National Park's General Info Desk at (307) 739-3300</li>
-        </ul>
+    <ul>
+        <li>Entrance Fee: Private Vehicle - $30.00 for 7 days</li>
+        <li>Does offer campground areas on a first come, first served basis, no advanced reservations, maximum stay of 14 days at all areas except Jenny Lake (7 day max)</li>
+        <li>Leashed pets are allowed in the park but are not allowed on any multi-use pathways within the park, or in the backcountry, or buildings.</li>
+        <li>Contact Grand Teton National Park's General Info Desk at (307) 739-3300</li>
+    </ul>
     <h3>Glacier National Park</h3>
-        <ul>
-            <li>Entrance Fee: Private Vehicle - $30.00 for 7 days</li>
-            <li>Does offer campground areas, advance reservations allowed at Fish Creek, St. Marys, Apgar and Many Glaicer. All other campgrounds are first come, first served.</li>
-            <li>Leashed pets are allowed in developed areas of the park only. They are not allowed on trails, lake shores, in the backcountry, or in buildings.</li>
-            <li>Contact Glacier National Park's General Info Desk at (406) 888-7800</li>
-        </ul>
+    <ul>
+        <li>Entrance Fee: Private Vehicle - $30.00 for 7 days</li>
+        <li>Does offer campground areas, advance reservations allowed at Fish Creek, St. Marys, Apgar and Many Glaicer. All other campgrounds are first come, first served.</li>
+        <li>Leashed pets are allowed in developed areas of the park only. They are not allowed on trails, lake shores, in the backcountry, or in buildings.</li>
+        <li>Contact Glacier National Park's General Info Desk at (406) 888-7800</li>
+    </ul>
     <h3>Sleeping Bear Dunes National Lakeshore</h3>
-        <ul>
-            <li>Entrance Fee: Private Vehicle - $15.00 for 7 days</li>
-            <li>Does offer campground areas and allows advanced reservations.</li>
-            <li>Leashed pets are allowed on some beaches.</li>
-            <li>Contact Sleeping Bear Dunes National Lakeshore's General Info Desk at (231) 326-4100</li>
-        </ul>
+    <ul>
+        <li>Entrance Fee: Private Vehicle - $15.00 for 7 days</li>
+        <li>Does offer campground areas and allows advanced reservations.</li>
+        <li>Leashed pets are allowed on some beaches.</li>
+        <li>Contact Sleeping Bear Dunes National Lakeshore's General Info Desk at (231) 326-4100</li>
+    </ul>
     <script type="text/javascript" src="js/jquery-useme.js"></script>
     <script type="text/javascript">
         $(document).ready(function() {
             $('dd').toggle();
 
             $('#show-answers').click(function() {
-                $('dd').toggle();
+                $('dd').fadeToggle();
             });
 
             $('ul').each(function() {
                 $(this).children().first().css('font-weight', 'bold');
             });
 
-            $('li').click(function(){
-                $(this).parent().hide();
+            $('h3').click(function() {
+                $(this).next().fadeToggle();
             });
 
-            // $('h3').each(function() {
-            //     $(this).click(function() {
-            //         $('ul').toggleClass('invisible');
-            //     });
-            // });
         });
     </script>
 </body>
