@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <style type="text/css">
+        .col-sm-4 {
+            text-align: center;
+            background-color: #DEB887;
+
+        }
+        .container {
+            background-color: #6495ED;
+        }
+        #input {
+            padding-top: 15px;
+        }
+    </style>
+    <title>Weather Map API Exercise</title>
+</head>
+<body>
+<div class="container">
+    <h1>Weather Map App</h1>
+    <h2>3-day Forecast</h2>
+    <h3 id="city-name"></h3>
+    <div id="content"></div>
+    <div id="input">
+        <input type="text" id="latitude" placeholder="latitude">
+        <input type="text" id="longitude" placeholder="longitude">
+        <button class="btn btn-default" id="submit">Get Weather</button>
+    </div>
+    <div id="map-target"></div>
+</div>
+
+<script type="text/javascript" src="js/jquery-useme.js"></script>
+<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAC2XAPq6ZjXTQIx9KQ96emBtVFNGn9cIg"></script>
+<script type="text/javascript" src="js/weather_map.js"></script>
+</body>
+</html>

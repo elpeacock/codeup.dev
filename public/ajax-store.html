@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
+    <title>Online Store</title>
+</head>
+<body>
+<div class="container">
+    
+    <h1>My Tool Store</h1>
+
+    <table class="table table-bordered" id="products">
+        <thead class="thead-inverse">
+            <tr>
+                <th>Title</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Categories</th>
+            </tr>
+        </thead>
+        <tbody id="insertProducts"></tbody>
+    </table>
+    <button class="btn btn-default"id="update">Update Inventory</button>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script type="text/javascript" src="js/jquery-useme.js"></script>
+
+<script>
+// (function() {
+    "use strict";
+    // TODO: Create an ajax GET request for /data/inventory.json
+    var inventory;    
+
+    function getData (){
+        console.log("test");
+        $.ajax("/data/inventory.json").done(function(data){
+        console.log(data);
+        inventory = data;
+        console.log (inventory);
+        addTools(inventory);
+        });
+    };
+    
+    getData();
+
+    // TODO: Take the data from inventory.json and append it to the products table
+    function addTools (inventory) {
+        var content = '';
+        inventory.forEach(function (tool) {
+            content += '<tr>';
+            content += '<td>' + tool.title + '</td>';
+            content += '<td>' + ' In Stock: ' + tool.quantity + '</td>'; 
+            content += '<td>' + '$' + tool.price + ' each' + '</td>';
+            content += '<td>' + tool.categories + '</td>';
+            content += '</tr>';
+            console.log (content);
+        });
+        $('#insertProducts').empty();
+        $('#insertProducts').append(content);
+    };
+
+    $("#update").click(function(e){
+        getData();
+        addTools(inventory);
+    });
+
+    // addTools(inventory);
+    //       HINT: Your data should come back as a JSON object; use console.log() to inspect
+    //             its contents and fields
+    //       HINT: You will want to target #insertProducts for your new HTML elements
+// })();
+</script>
+<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+</body>
+</html>
