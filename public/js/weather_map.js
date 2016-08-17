@@ -105,6 +105,7 @@ function addForecast(forecastData){
         content += "</div>";
     });
     
+    $("#forecast").text("3 Day Forecast")
     $("#city-name").empty();
     $("#city-name").text(cityName);
     $("#content").empty();
