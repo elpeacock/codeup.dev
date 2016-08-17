@@ -240,6 +240,8 @@ th {
   }
   .navbar {
     display: none;
+    background-color: #72998A;
+    color: black;
   }
   .btn > .caret,
   .dropup > .btn > .caret {
@@ -3978,6 +3980,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   padding-left: 0;
   margin-bottom: 0;
   list-style: none;
+  color: black;
 }
 .nav > li {
   position: relative;
@@ -4037,7 +4040,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .nav-tabs > li.active > a,
 .nav-tabs > li.active > a:hover,
 .nav-tabs > li.active > a:focus {
-  color: #555;
+  color: black;
   cursor: default;
   background-color: #fff;
   border: 1px solid #ddd;
@@ -4217,7 +4220,12 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
     padding-left: 0;
   }
 }
-.navbar-fixed-top .navbar-collapse,
+.navbar-fixed-top {
+  max-height: 340px;
+  background-color: #72998A;
+}
+
+.navbar-collapse,
 .navbar-fixed-bottom .navbar-collapse {
   max-height: 340px;
 }
@@ -4280,6 +4288,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   padding: 15px 15px;
   font-size: 18px;
   line-height: 20px;
+  color: black;
 }
 .navbar-brand:hover,
 .navbar-brand:focus {
@@ -4330,6 +4339,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   padding-top: 10px;
   padding-bottom: 10px;
   line-height: 20px;
+  color: black;
 }
 @media (max-width: 767px) {
   .navbar-nav .open .dropdown-menu {
@@ -4500,18 +4510,18 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   border-color: #e7e7e7;
 }
 .navbar-default .navbar-brand {
-  color: #777;
+  color: black;
 }
 .navbar-default .navbar-brand:hover,
 .navbar-default .navbar-brand:focus {
-  color: #5e5e5e;
+  color: #5e5e5e;   
   background-color: transparent;
 }
 .navbar-default .navbar-text {
   color: #777;
 }
 .navbar-default .navbar-nav > li > a {
-  color: #777;
+  color: black;
 }
 .navbar-default .navbar-nav > li > a:hover,
 .navbar-default .navbar-nav > li > a:focus {
@@ -4592,7 +4602,7 @@ fieldset[disabled] .navbar-default .btn-link:focus {
   color: #ccc;
 }
 .navbar-inverse {
-  background-color: #222;
+  background-color: #72998A;
   border-color: #080808;
 }
 .navbar-inverse .navbar-brand {
