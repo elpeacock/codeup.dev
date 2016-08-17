@@ -1,0 +1,97 @@
+[
+    {
+        "title": "Hammer",
+        "quantity": 25,
+        "categories": [
+            "tool"
+        ],
+        "price": 20
+    }, {
+        "title": "Drill",
+        "quantity": 5,
+        "categories": [
+            "tool",
+            "powered"
+        ],
+        "price": 100
+    }, {
+        "title": "Mower",
+        "quantity": 5,
+        "categories": [
+            "tool",
+            "gas",
+            "outdoor"
+        ],
+        "price": 200
+    }, {
+        "title": "Screwdrivers",
+        "quantity": 25,
+        "categories": [
+            "tool"
+        ],
+        "price": 10
+    }, {
+        "title": "level",
+        "quantity": 25, 
+        "categories": [
+            "tool"
+        ],
+        "price": 5
+    }, {
+        "title": "2x4",
+        "quantity": 100,
+        "categories": [
+            "materials",
+            "wood"
+        ],
+        "price": 3
+    }, {
+        "title": "Air Compressor",
+        "quantity": 3,
+        "categories": [
+            "tool",
+            "powered"
+        ],
+        "price": 600
+    }, {
+        "title": "Table Saw",
+        "quantity": 3,
+        "categories": [
+            "tool",
+            "powered"
+        ],
+        "price": 500
+    }, {
+        "title": "Nail Gun",
+        "quantity": 5,
+        "categories": [
+            "tool",
+            "attachment"
+        ],
+        "price": 150
+    }, {
+        "title": "Tool Belt",
+        "quantity": 10,
+        "categories": [
+            "accessories",
+            "storage"
+        ],
+        "price": 25
+    }, {
+        "title": "3x3 Porcelain Tiles",
+        "quantity": 1000,
+        "categories": [
+            "kitchen",
+            "bath"
+        ],
+        "price": 1
+    }, {
+        "title": "Tile Grout",
+        "quantity": 25,
+        "categories":[
+            "kitchen",
+            "bath"
+        ],
+        "price": 10
+    }
+]
