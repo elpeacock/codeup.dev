@@ -1,5 +1,15 @@
 <?php
-$faves = ['mah fraanssss *', 'coffee', 'stargazing', 'powder days **', 'live music', 'dirty martinis', 'tacos', 'cheesecake', 'college football', 'puppies', 'Wy-home-ing'];
+
+function pageController()
+{
+	$favoriteThings = [];
+	$favoriteThings['listOfFaves'] = ['mah fraanssss *', 'coffee', 'stargazing', 'powder days **', 'live music', 'dirty martinis', 'tacos', 'cheesecake', 'college football', 'puppies/doggies', 'Wy-home-ing'];
+
+	return $favoriteThings;
+	
+}
+extract(pageController());
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -27,7 +37,7 @@ $faves = ['mah fraanssss *', 'coffee', 'stargazing', 'powder days **', 'live mus
 		
 	<h1>My Faves!</h1>
 	<ul class="list-group">
-		<?php foreach($faves as $key => $fave): ?>
+		<?php foreach($listOfFaves as $fave): ?>
 			<li class="list-group-item"><?= $fave; ?></li>
 		<?php endforeach; ?>
 	</ul>

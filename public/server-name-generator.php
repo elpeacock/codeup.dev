@@ -1,11 +1,9 @@
 <?php
 
-$adjectives = ['hot', 'cold', 'tasty', 'beautiful', 'wild', 'messy', 'clean', 'funny', 'sad', 'smiley', 'dirty', 'spooky', 'popular', 'crazy', 'photogenic'];
-
-$nouns = ['panda', 'letter', 'guitar', 'jeans', 'waterjug', 'concert', 'fire', 'song', 'puppy', 'elephant', 'tree', 'key', 'pen', 'phone', 'banjo'];
 
 
-function randomPicker($array, $array2) {
+function randomPicker($array, $array2) 
+{
 	$randomAdj = array_rand($array);
 	$randomNoun = array_rand($array2);
 
@@ -16,7 +14,20 @@ function randomPicker($array, $array2) {
 
 	return $msg;
 }
-$serverName = randomPicker($adjectives, $nouns);
+
+function pageController()
+{
+	$adjectives = ['overwrought', 'overconfident', 'tasty', 'beautiful', 'wild', 'messy', 'vulgar', 'eager', 'plucky', 'momentous', 'imported', 'spooky', 'famous', 'crazy', 'photogenic'];
+
+	$nouns = ['panda', 'underwear', 'guitar', 'jeans', 'waterjug', 'concert', 'fire', 'eggnog', 'puppy', 'elephant', 'territory', 'rhythm', 'wine', 'hook', 'banjo'];
+	
+	$data = array();
+
+	$data['message'] = randomPicker($adjectives, $nouns);
+
+	return $data;
+}
+extract(pageController());
 ?>
 
 <!DOCTYPE html>
@@ -30,8 +41,9 @@ $serverName = randomPicker($adjectives, $nouns);
 			color: midnightblue;
 			margin-top: 100px;
 			padding: 25px;
-			box-shadow: 10px 10px 5px lightgray;
+			box-shadow: 10px 10px 5px darkgray;
 			border-radius: 50px;
+			background-color: hotpink;
 		}
 		body{
 			background-color: papayawhip;
@@ -40,7 +52,7 @@ $serverName = randomPicker($adjectives, $nouns);
 </head>
 <body>
 	<div class='container'>
-		<h1>Here's your server name: <br> <?= $serverName ?></h1>
+		<h1>Here's your server name: <br> <?= $message ?></h1>
 	</div>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </body>
