@@ -23,13 +23,25 @@ extract(pageController());
             background-image: url(/img/righttenniscourt.jpg);
             background-size: cover;
         }
+
         h1 {
             text-align: center;
         }
+
         h2 > a {
             color: midnightblue;
         }
+
         h2 {
+            text-align: center;
+            background-color: white;
+            padding-top: 30px;
+            padding-bottom: 30px;
+            border-radius: 75%;
+
+        }
+
+        .col-md-6 {
             text-align: center;
         }
     </style>
@@ -38,8 +50,8 @@ extract(pageController());
     <div class="container">
         <h1>Pong's turn!</h1>
         <h1>Volley count: <?= $value ?></h1>
-        <h2><a href="ping.php?value=<?= ($value + 1) ?>">hit</a></h2>
-        <h2><a href="ping.php?value=0">miss</a></h2>
+        <h2 class="col-md-6"><a href="ping.php?value=<?= ($value + 1) ?>">hit</a></h2>
+        <h2 class="col-md-6"><a href="ping.php?value=0">miss</a></h2>
 
 
     </div>
