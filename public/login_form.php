@@ -1,23 +1,25 @@
 <?php
-    
+    session_start();
+
     $message = 'Enter your login info';
 
     if (!empty($_GET) || !empty($_POST)) {
 
         if (($_POST['username'] === 'guest') && ($_POST['password'] === 'password')) {
-            header('location: /authorized.php');
-            die;
+            $_SESSION['sessionId'] = session_id();                                  //assigning session id
+            $_SESSION['loggedInUser'] = $_POST['username'];                         //assigning username to session
+            if (isset($_SESSION['loggedInUser'])) {                                 //checking if user is logged in
+                header('location: /authorized.php');                                //logged in user = redirect to authpg
+                die;
+            }
         } else {
-            $message = "Login failed. Try again";
+            echo $message = "Login failed. Try again";                                   //not logged in = login now
         }
     }
 
 
 ?>
-<!-- - build a login form, call it login_form.php
-    - username or email input with placeholder
-    - password input type
-    - remember me check box -->
+
 
 <!DOCTYPE html>
 <html>

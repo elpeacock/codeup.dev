@@ -1,3 +1,15 @@
+<?php
+
+    session_start();                               //picks up open session or starts a new one if there is no open session
+
+    if (!isset($_SESSION['loggedInUser'])) {       //checks to see if the user is logged in
+        header('location: /login_form.php');       //if not logged in, redirect to login_fomr
+        die;                                       //murder php after redirect
+    } else {
+        echo "{$_SESSION['loggedInUser']}";        //if logged in display username on welcome
+    }
+
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -30,9 +42,10 @@
 <body>
     <div class="container">
         <div class="holdTheHeaders">
-            <h1>Proceed....</h1>
+            <h1>Proceed <?= ($_SESSION['loggedInUser']) ?> ....</h1>
             <h2>You have been authorized</h2>
         </div>
+        <button>Log Me Out!</button>
 
     </div>
 
