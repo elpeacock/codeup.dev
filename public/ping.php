@@ -1,10 +1,16 @@
 <?php
 
+require_once "functions.php";
+
 function pageController()
 {
     $data = [];
 
-    $data['value'] = isset($_GET['value']) ? $_GET['value'] : 0;
+    if (inputHas('value')) {
+        $data['value'] = inputGet('value');
+    } else {
+        $data['value'] = 0;
+    }
 
     return $data;
     
@@ -49,8 +55,8 @@ extract(pageController());
 <body>
     <div class="container">
         <h1>Ping's turn!</h1>
-        <h1>Volley count: <?= $value ?></h1>
-        <h2 class="col-md-6"><a href="pong.php?value=<?= ($value + 1) ?>">hit</a></h2>
+        <h1>Volley count: <?= escape($value) ?></h1>
+        <h2 class="col-md-6"><a href="pong.php?value=<?= escape($value + 1) ?>">hit</a></h2>
         <h2 class="col-md-6"><a href="pong.php?value=0">miss</a></h2>
 
 
