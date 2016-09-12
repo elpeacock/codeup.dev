@@ -1,13 +1,18 @@
 <?php
 
-    session_start();                               //picks up open session or starts a new one if there is no open session
+session_start();                                            //picks up open session or starts a new one if there is no open session
 
-    if (!isset($_SESSION['loggedInUser'])) {       //checks to see if the user is logged in
-        header('location: /login_form.php');       //if not logged in, redirect to login_fomr
-        die;                                       //murder php after redirect
-    } else {
-        echo "{$_SESSION['loggedInUser']}";        //if logged in display username on welcome
-    }
+function pageController () {
+
+    if (!isset($_SESSION['loggedInUser'])) {                //checks to see if the user is logged in
+        header('location: /login_form.php');                //if not logged in, redirect to login_fomr.php
+        die;                                                //murder php after redirect
+    }         
+    return ['username' => $_SESSION['loggedInUser']];       //if logged in display username on welcome
+}
+
+extract(pageController());
+
 
 ?>
 <!DOCTYPE html>
@@ -42,10 +47,13 @@
 <body>
     <div class="container">
         <div class="holdTheHeaders">
-            <h1>Proceed <?= ($_SESSION['loggedInUser']) ?> ....</h1>
+            <h1>Proceed <?= $username; ?> ....</h1>
             <h2>You have been authorized</h2>
         </div>
-        <button>Log Me Out!</button>
+        <form method="post" action="/logout.php">
+            <button type="submit">Log Me Out</button>
+        </form>
+        
 
     </div>
 

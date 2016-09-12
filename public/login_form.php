@@ -1,21 +1,21 @@
 <?php
-    session_start();
+session_start();
 
-    $message = 'Enter your login info';
+$message = 'Enter your login info';
 
-    if (!empty($_GET) || !empty($_POST)) {
+if (!empty($_GET) || !empty($_POST)) {                                                  //check to see if form has been submitted
 
-        if (($_POST['username'] === 'guest') && ($_POST['password'] === 'password')) {
-            $_SESSION['sessionId'] = session_id();                                  //assigning session id
-            $_SESSION['loggedInUser'] = $_POST['username'];                         //assigning username to session
-            if (isset($_SESSION['loggedInUser'])) {                                 //checking if user is logged in
-                header('location: /authorized.php');                                //logged in user = redirect to authpg
-                die;
-            }
-        } else {
-            echo $message = "Login failed. Try again";                                   //not logged in = login now
+    if (($_POST['username'] === 'guest') && ($_POST['password'] === 'password')) {      //check the name + password match 
+        $_SESSION['sessionId'] = session_id();                                          //assigning session id on log in
+        $_SESSION['loggedInUser'] = $_POST['username'];                                 //assigning username to session on log in 
+        if (isset($_SESSION['loggedInUser'])) {                                         //checking if user is logged in
+            header('location: /authorized.php');                                        //logged in user = redirect to authpg
+            die;                                                                        //kill php after redirect
         }
+    } else {
+        echo $message = "Login failed. Try again";                                      //not logged in = resend to login/show error 
     }
+}
 
 
 ?>
