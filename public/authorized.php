@@ -2,13 +2,16 @@
 
 session_start();                                            //picks up open session or starts a new one if there is no open session
 
+require_once '../Auth.php';
+
+
 function pageController () {
 
     if (!isset($_SESSION['loggedInUser'])) {                //checks to see if the user is logged in
         header('location: /login_form.php');                //if not logged in, redirect to login_fomr.php
         die;                                                //murder php after redirect
     }         
-    return ['username' => $_SESSION['loggedInUser']];       //if logged in display username on welcome
+    return Auth::user();                                   //if logged in display username on welcome
 }
 
 extract(pageController());
@@ -47,7 +50,7 @@ extract(pageController());
 <body>
     <div class="container">
         <div class="holdTheHeaders">
-            <h1>Proceed <?= $username; ?> ....</h1>
+            <h1>Proceed <?= $username ?> ....</h1>
             <h2>You have been authorized</h2>
         </div>
         <form method="post" action="/logout.php">

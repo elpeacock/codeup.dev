@@ -2,22 +2,26 @@
     
 session_start();
 
-function clearSession()
-{
-    // clear $_SESSION array
-    session_unset();
+require_once '../Auth.php';
 
-    // delete session data on the server
-    session_destroy();
+Auth::logout();
 
-    // ensure client is sent a new session cookie
-    session_regenerate_id();
+// function clearSession()
+// {
+//     // clear $_SESSION array
+//     session_unset();
 
-    // start a new session - session_destroy() ended our previous session so
-    // if we want to store any new data in $_SESSION we must start a new one
-    session_start();
-}   
-clearSession();
+//     // delete session data on the server
+//     session_destroy();
+
+//     // ensure client is sent a new session cookie
+//     session_regenerate_id();
+
+//     // start a new session - session_destroy() ended our previous session so
+//     // if we want to store any new data in $_SESSION we must start a new one
+//     session_start();
+// }   
+// clearSession();
 ?>
 <!DOCTYPE html>
 <html>
