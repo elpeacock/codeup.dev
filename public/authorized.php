@@ -1,17 +1,21 @@
 <?php
+//picks up the open session or starts a new one if there is no open session
+session_start();
 
-session_start();                                            //picks up open session or starts a new one if there is no open session
-
+//bring in the Auth class
 require_once '../Auth.php';
 
 
 function pageController () {
-
-    if (!isset($_SESSION['loggedInUser'])) {                //checks to see if the user is logged in
-        header('location: /login_form.php');                //if not logged in, redirect to login_fomr.php
-        die;                                                //murder php after redirect
+    //checks to see if the user is logged in
+    if (!isset($_SESSION['loggedInUser'])) {
+        //if not logged in, redirect to login_fomr.php
+        header('location: /login_form.php');
+        //kill scripts after redirect
+        die;                                                
     }         
-    return Auth::user();                                   //if logged in display username on welcome
+    //if logged in display username on welcome
+    return Auth::user();                                   
 }
 
 extract(pageController());

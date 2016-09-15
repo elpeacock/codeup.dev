@@ -1,9 +1,9 @@
 <?php
-    
+//continue open session    
 session_start();
-
+//bring in Auth class
 require_once '../Auth.php';
-
+//call Auth logout fxn
 Auth::logout();
 
 // function clearSession()

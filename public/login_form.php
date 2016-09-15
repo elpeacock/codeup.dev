@@ -3,8 +3,10 @@ session_start();
 
 require_once '../Auth.php';
 
+//check to see if the form has been submitted
 if (!empty($_REQUEST)) 
 {
+    //call Auth class attempt fxn
     Auth::attempt($_REQUEST['username'],$_REQUEST['password']);
 }
 
@@ -55,7 +57,7 @@ if (!empty($_REQUEST))
 <body>
     <div class="container">
         <form class="col-md-4" method="POST" action="/login_form.php">
-            <h1>enter login info</h1>
+            <h1><?php echo Auth::$message ?></h1>
             <p>
             <label>Username
                 <input class="form-control" id="username" name="username" type="text" placeholder="Username goes here">

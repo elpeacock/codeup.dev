@@ -6,26 +6,39 @@ class Auth
 {
     public static $hashedPassword = '$2y$10$SLjwBwdOVvnMgWxvTI4Gb.YVcmDlPTpQystHMO2Kfyi/DS8rgA0Fm';
     public static $isMatch;
+    public static $message = 'Enter your login info:';
     //hash the password
     // public static function hashIt ($correctPassword) {
     //     $correctPassword = 'password';
     //     $hashedPassword = password_hash($correctPassword, PASSWORD_DEFAULT);  
     // } 
 
-    //attempted login function
+    //function to verify log in attempts
     public static function attempt($username, $password) {
-        $isMatch = password_verify($password, self::$hashedPassword);      //verify password, boolean saved in $isMatch
+        //verify password, $isMatch returns boolean
+        $isMatch = password_verify($password, self::$hashedPassword);      
+        //create an instance of log
         $LogObject = new Log();
-        if ( ($username === 'guest') && ($isMatch == true) ) {                      //check the name + password match 
-            $_SESSION['sessionId'] = session_id();                                  //assigning session id on log in
-            $_SESSION['loggedInUser'] = $username;                         //assigning username to session on log in 
-            if (isset($_SESSION['loggedInUser'])) {                                 //checking if user is logged in
-                $LogObject->info("User {$_SESSION['loggedInUser']} is logged in");         //Log info
-                header('location: /authorized.php');                                //logged in user = redirect to authpg
-                die;                                                                //kill php after redirect
+        //check that the username and password match
+        if ( ($username === 'guest') && ($isMatch == true) ) { 
+            //assign session Id on successful log in
+            $_SESSION['sessionId'] = session_id();                                 
+            //assign username to the session on successful log in
+            $_SESSION['loggedInUser'] = $username;
+            //checks if the user is already logged in
+            if (isset($_SESSION['loggedInUser'])) {          
+                //log login info
+                $LogObject->info("User {$_SESSION['loggedInUser']} is logged in");   
+                //if user is successfullly logged in -> redirect them to the authorized page
+                header('location: /authorized.php');
+                //ALWAYS KILL THE SCRIPTS AFTER A REDIRECT
+                die;
             }
         } else {
-            $LogObject->error("User login failed");                                 //not logged in = resend to login/Log error 
+            //if user is not logged in/log in failed, stay on log in page & log an error in the log
+            $LogObject->error("User login failed");
+            //change message to display login in failed message to user
+            self::$message = 'Login failed. Try Again.';
         }
 
     }
@@ -33,16 +46,20 @@ class Auth
     //check if a user is logged in (return boolean)
     public static function check() {
         
-        if (isset($_SESSION['loggedInUser'])) {                //checks to see if the user is logged in
+        //if logged in return true
+        if (isset($_SESSION['loggedInUser'])) {                
             return true;
+        //if not logged in, return false & redirect to login_fomr.php
         } else {
             return false;
-            header('location: /login_form.php');                //if not logged in, redirect to login_fomr.php
-            die;                                                //murder php after redirect
+            header('location: /login_form.php');                
+            //ALWAYS KILL THE SCRIPTS AFTER A REDIRECT
+            die;
             
         }
 
     }
+    
     //return username of currently logged in person
     public static function user() {
         return ['username' => $_SESSION['loggedInUser']];
