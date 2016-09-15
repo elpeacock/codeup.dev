@@ -1,5 +1,5 @@
 .DS_Store
-
+*.log
 
 public/bootstrap-3.3.6-dist/
 public/bootstrap.html
