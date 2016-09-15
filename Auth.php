@@ -28,7 +28,7 @@ class Auth
             //checks if the user is already logged in
             if (isset($_SESSION['loggedInUser'])) {          
                 //log login info
-                $LogObject->info("User {$_SESSION['loggedInUser']} is logged in");   
+                $LogObject->info("User {$username} is logged in");   
                 //if user is successfullly logged in -> redirect them to the authorized page
                 header('location: /authorized.php');
                 //ALWAYS KILL THE SCRIPTS AFTER A REDIRECT
@@ -36,7 +36,7 @@ class Auth
             }
         } else {
             //if user is not logged in/log in failed, stay on log in page & log an error in the log
-            $LogObject->error("User login failed");
+            $LogObject->error("User {$username} login failed");
             //change message to display login in failed message to user
             self::$message = 'Login failed. Try Again.';
         }
@@ -49,7 +49,7 @@ class Auth
         //if logged in return true
         if (isset($_SESSION['loggedInUser'])) {                
             return true;
-        //if not logged in, return false & redirect to login_fomr.php
+        //if not logged in, return false & redirect to login_form.php
         } else {
             return false;
             header('location: /login_form.php');                
