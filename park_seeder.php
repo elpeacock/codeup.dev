@@ -7,7 +7,7 @@ const DB_USER = 'parks_user';
 const DB_PASS = 'parks';
 
 //req db_connect
-require '../../exercises/db_connect.php';
+require_once '/db_connect.php';
 
 //query to delete any records
 $dbc->exec('TRUNCATE TABLE national_parks');
