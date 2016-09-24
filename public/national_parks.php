@@ -55,17 +55,31 @@ extract(pageController($dbc));
 <head>
     <title>National Parks</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Asul:400,700" rel="stylesheet">
     <style type="text/css">
         body {
             background-image: url('img/GrandPrismatic.jpeg');
             background-size: cover;
+            font-family: 'Asul', sans-serif;
         }
+        
+        a {
+            color: #09643F;
+        }
+
+        h1 {
+            font-size: 3.5em;
+        }
+
         .container {
-            background-color: 
+            background-color: rgba(214, 114, 71, 0.75);
+            margin-top: 60px;
+            border-radius: 15px;
 
         }
+
         #pages {
-            text-align: center;
+            text-align: center; 
         }
     </style>
 </head>
@@ -73,11 +87,14 @@ extract(pageController($dbc));
     <div class="container">
         <div class="table-container">
             <h1>National Parks</h1>
-                <table class="table">
-                    <th>Name</th>
-                    <th>Location</th>
-                    <th>Date Established</th>
-                    <th>Area In Acres</th>
+                <table class="table table-responsive">
+                    <thead class='thead'> 
+                        <th><h3>Name</h3></th>
+                        <th><h3>Location</h3></th>
+                        <th><h3>Date Established</h3></th>
+                        <th><h3>Area In Acres</h3></th>
+                    </thead>
+                    <tbody>   
                     <?php foreach ($parks as $index => $park) : ?>
                         <tr>
                             <td><?= $park['name'] ?></td>
@@ -86,10 +103,12 @@ extract(pageController($dbc));
                             <td><?= $park['area_in_acres'] ?></td>
                         </tr>
                     <?php endforeach; ?>
+                    </tbody>
                 </table>
         </div>
         <div id="footer">
             <div id="pages">
+            <h3>
                 <?php
                 if ($currentPage > 1)
                 {
@@ -102,11 +121,12 @@ extract(pageController($dbc));
                     } else {
                         echo "<a href='?page=" . ($i) . " '>" . " " . $i . " " . "</a>";
                     }
-                    if ($currentPage < $total)
+                    if ($currentPage < ($total/4))
                     {
                         echo "<a href='?page=" . ($currentPage + 1) . " '>  Next</a> ";
                     } 
                     ?>
+                </h3>
                 </div>
             </div>
     </div>
