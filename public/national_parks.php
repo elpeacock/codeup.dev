@@ -12,11 +12,10 @@ require_once '../db_connect.php';
 //echo connection status
 // echo $dbc->getAttribute(PDO::ATTR_CONNECTION_STATUS) . "\n";
 
-
-
-
 //wrap parks in page controller
 function pageController ($dbc) {
+    
+    //pagination
     $data = array();
     // what page are we on? 
     if (!empty($_GET['page'])) {
@@ -25,7 +24,6 @@ function pageController ($dbc) {
         $currentPage = 1;
     }
 
-    $data['total'] = $dbc->query('SELECT COUNT(*) FROM national_parks;')->fetchColumn();
 
     //offset maths
     $limit = 4;
@@ -33,18 +31,46 @@ function pageController ($dbc) {
 
     function getParks ($dbc, $limit, $offset) {
     //pull the parks from database
-        $query = $dbc->query('SELECT * FROM national_parks LIMIT ' . $limit . ' OFFSET ' . $offset . ';');
-        $allTheRows = $query->fetchAll(PDO::FETCH_ASSOC);
+        $stmt = $dbc->prepare('SELECT * FROM national_parks LIMIT :limit OFFSET :offset;');
+        $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+        $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+        $stmt->execute();
+        $allTheRows = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $allTheRows;
     }
 
     $parks = getParks($dbc, $limit, $offset);
+    //total number of rows (national parks)
+    $data['total'] = $dbc->query('SELECT COUNT(*) FROM national_parks;')->fetchColumn();
     $data['parks'] = $parks;
     $data['currentPage'] = $currentPage;
+    $data['limit'] = $limit;
     return $data;
 }
 
 extract(pageController($dbc));
+
+//pull the post information from form into database
+if (!empty ($_REQUEST)) {
+    
+    if (($_REQUEST['name'] !== $park['name']) && ($_REQUEST['location'] !== $park['location'])){
+        //prepare statement
+        $insert = $dbc->prepare("INSERT INTO national_parks (name, location, date_established, area_in_acres, park_description) VALUES (:name, :location, :date_established, :area_in_acres, :park_description);");
+        
+        //insert values into database after stripping tags/special chars etc
+        $insert->bindValue(':name', strip_tags(htmlspecialchars(trim($_REQUEST['name']))), PDO::PARAM_STR);
+        $insert->bindValue(':location', strip_tags(htmlspecialchars(trim($_REQUEST['location']))), PDO::PARAM_STR);
+        $insert->bindValue(':date_established', date('Y-m-d', strtotime(strip_tags(htmlspecialchars(trim($_REQUEST['date_established']))))), PDO::PARAM_STR);
+        $insert->bindValue(':area_in_acres', strip_tags(htmlspecialchars(trim($_REQUEST['area_in_acres']))), PDO::PARAM_STR);
+        $insert->bindValue(':park_description', strip_tags(htmlspecialchars(trim($_REQUEST['park_description']))), PDO::PARAM_STR);
+
+        $insert->execute();
+        
+    }
+}
+
+// //extract the page controller again to update the list?
+// extract(pageController($dbc));
 
 
 
@@ -71,6 +97,10 @@ extract(pageController($dbc));
             font-size: 3.5em;
         }
 
+        button {
+            background-color: #09643F;
+        }
+
         .container {
             background-color: rgba(214, 114, 71, 0.75);
             margin-top: 60px;
@@ -78,8 +108,28 @@ extract(pageController($dbc));
 
         }
 
+        .form-header {
+            text-align: center;
+        }
+
+        .form {
+            margin-bottom: 75px;
+        }
+
         #pages {
             text-align: center; 
+        }
+
+        #date {
+            text-align: center;
+        }
+
+        #description {
+            text-align: left;
+        }
+
+        #description-head {
+            text-align: center;
         }
     </style>
 </head>
@@ -91,45 +141,84 @@ extract(pageController($dbc));
                     <thead class='thead'> 
                         <th><h3>Name</h3></th>
                         <th><h3>Location</h3></th>
-                        <th><h3>Date Established</h3></th>
-                        <th><h3>Area In Acres</h3></th>
+                        <th id="date"><h3>Date Established</h3></th>
+                        <th id="area"><h3>Area In Acres</h3></th>
+                        <th id="description-head"><h3>Park Description</h3></th>
                     </thead>
                     <tbody>   
                     <?php foreach ($parks as $index => $park) : ?>
                         <tr>
                             <td><?= $park['name'] ?></td>
                             <td><?= $park['location'] ?></td>
-                            <td><?= $park['date_established'] ?></td>
-                            <td><?= $park['area_in_acres'] ?></td>
+                            <td id="date"><?= $park['date_established'] ?></td>
+                            <td id="area"><?= number_format($park['area_in_acres']) ?></td>
+                            <td id="description"><?= $park['park_description'] ?></td>
                         </tr>
                     <?php endforeach; ?>
                     </tbody>
                 </table>
         </div>
-        <div id="footer">
-            <div id="pages">
-            <h3>
-                <?php
-                if ($currentPage > 1)
+        <div id="pages">
+        <h3>
+            <?php
+            //pagination
+            if ($currentPage > 1)
+            {
+                echo "<a href='?page=" . ($currentPage - 1) . " '>Previous  </a> ";
+            }
+            for ($i = 1; $i <= ($total/$limit); $i += 1)
+                if ($i == $currentPage)
                 {
-                    echo "<a href='?page=" . ($currentPage - 1) . " '>Previous  </a> ";
+                    echo $i;
+                } else {
+                    echo "<a href='?page=" . ($i) . " '>" . " " . $i . " " . "</a>";
                 }
-                for ($i = 1; $i <= ($total/4); $i += 1)
-                    if ($i == $currentPage)
-                    {
-                        echo $i;
-                    } else {
-                        echo "<a href='?page=" . ($i) . " '>" . " " . $i . " " . "</a>";
-                    }
-                    if ($currentPage < ($total/4))
-                    {
-                        echo "<a href='?page=" . ($currentPage + 1) . " '>  Next</a> ";
-                    } 
-                    ?>
-                </h3>
-                </div>
-            </div>
+                if ($currentPage < ($total/$limit))
+                {
+                    echo "<a href='?page=" . ($currentPage + 1) . " '>  Next</a> ";
+                } 
+                ?>
+        </h3>
+        </div>
     </div>
+        <div class="container form">
+            <form class="form-group" method="POST" action="/national_parks.php">
+                <h1 class="form-header">Add a Park</h1>
+                <br>
+                <br>
+                <div class="form-group row">
+                    <label for="example-text-input" class="col-xs-2 col-form-label">Park Name</label>
+                    <div class="col-xs-10">
+                        <input class="form-control" type="text" placeholder="Park Name" id="name">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="example-search-input" class="col-xs-2 col-form-label">Location</label>
+                    <div class="col-xs-10">
+                        <input class="form-control" type="text" placeholder="Park Location (State)" id="location">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="example-email-input" class="col-xs-2 col-form-label">Date Established</label>
+                    <div class="col-xs-10">
+                        <input class="form-control" type="date" placeholder="YYYY-mm-dd" id="date_established">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="example-url-input" class="col-xs-2 col-form-label">Area of Park</label>
+                    <div class="col-xs-10">
+                        <input class="form-control" type="number" placeholder="Park Acreage" id="area_in_acres">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="example-tel-input" class="col-xs-2 col-form-label">Park Description</label>
+                    <div class="col-xs-10">
+                        <textarea class="form-control" type="textarea" placeholder="Describe the Park" id="park_description"></textarea>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-lg center-block">Submit</button>
+            </form>
+        </div>
 
 
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
