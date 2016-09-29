@@ -8,6 +8,8 @@ const DB_PASS = 'parks';
 
 //req db_connect
 require_once '../db_connect.php';
+//req Input class
+require_once __DIR__ . '/../Input.php';
 
 //echo connection status
 // echo $dbc->getAttribute(PDO::ATTR_CONNECTION_STATUS) . "\n";
@@ -24,9 +26,12 @@ function pageController ($dbc) {
         $currentPage = 1;
     }
 
-
+    if (isset($_GET['limit'])) {
+        $limit = (int)strip_tags(htmlspecialchars(trim($_GET['limit'])));  
+    } else {
+        $limit = 4;
+    }
     //offset maths
-    $limit = 4;
     $offset = ($currentPage - 1) * $limit;
 
     function getParks ($dbc, $limit, $offset) {
@@ -50,27 +55,26 @@ function pageController ($dbc) {
 
 extract(pageController($dbc));
 
-//pull the post information from form into database
-if (!empty ($_REQUEST)) {
-    
-    if (($_REQUEST['name'] !== $park['name']) && ($_REQUEST['location'] !== $park['location'])){
-        //prepare statement
-        $insert = $dbc->prepare("INSERT INTO national_parks (name, location, date_established, area_in_acres, park_description) VALUES (:name, :location, :date_established, :area_in_acres, :park_description);");
-        
-        //insert values into database after stripping tags/special chars etc
-        $insert->bindValue(':name', strip_tags(htmlspecialchars(trim($_REQUEST['name']))), PDO::PARAM_STR);
-        $insert->bindValue(':location', strip_tags(htmlspecialchars(trim($_REQUEST['location']))), PDO::PARAM_STR);
-        $insert->bindValue(':date_established', date('Y-m-d', strtotime(strip_tags(htmlspecialchars(trim($_REQUEST['date_established']))))), PDO::PARAM_STR);
-        $insert->bindValue(':area_in_acres', strip_tags(htmlspecialchars(trim($_REQUEST['area_in_acres']))), PDO::PARAM_STR);
-        $insert->bindValue(':park_description', strip_tags(htmlspecialchars(trim($_REQUEST['park_description']))), PDO::PARAM_STR);
+//pull the post information from form
+if (Input::has('name') && Input::has('location') && Input::has('date_established') && Input::has('area_in_acres') && Input::has('park_description')) {
 
-        $insert->execute();
-        
-    }
+    //prepare statement to input info from post
+    $insert = $dbc->prepare("INSERT INTO national_parks (name, location, date_established, area_in_acres, park_description) VALUES (:name, :location, :date_established, :area_in_acres, :park_description);");
+    
+    //insert values into database after stripping tags/special chars etc
+    $insert->bindValue(':name', Input::getString('name'), PDO::PARAM_STR);
+    $insert->bindValue(':location', Input::getString('location'), PDO::PARAM_STR);
+    $insert->bindValue(':date_established', date('Y-m-d', strtotime(Input::getString('date_established'))), PDO::PARAM_STR);
+    $insert->bindValue(':area_in_acres', Input::getNumber('area_in_acres'), PDO::PARAM_STR);
+    $insert->bindValue(':park_description', Input::getString('park_description'), PDO::PARAM_STR);
+
+    $insert->execute();
+            
+
+    
 }
 
-// //extract the page controller again to update the list?
-// extract(pageController($dbc));
+
 
 
 
@@ -98,7 +102,7 @@ if (!empty ($_REQUEST)) {
         }
 
         button {
-            background-color: #09643F;
+            background-color: rgba(9, 100, 63, 0.7);
         }
 
         .container {
@@ -106,6 +110,11 @@ if (!empty ($_REQUEST)) {
             margin-top: 60px;
             border-radius: 15px;
 
+        }
+
+        .search {
+            padding-bottom: 10px;
+            padding-top: 10px;
         }
 
         .form-header {
@@ -136,7 +145,7 @@ if (!empty ($_REQUEST)) {
 <body>
     <div class="container">
         <div class="table-container">
-            <h1>National Parks</h1>
+            <h1>National Parks</h1>         
                 <table class="table table-responsive">
                     <thead class='thead'> 
                         <th><h3>Name</h3></th>
@@ -148,11 +157,11 @@ if (!empty ($_REQUEST)) {
                     <tbody>   
                     <?php foreach ($parks as $index => $park) : ?>
                         <tr>
-                            <td><?= $park['name'] ?></td>
-                            <td><?= $park['location'] ?></td>
-                            <td id="date"><?= $park['date_established'] ?></td>
-                            <td id="area"><?= number_format($park['area_in_acres']) ?></td>
-                            <td id="description"><?= $park['park_description'] ?></td>
+                            <td><?= strip_tags(htmlspecialchars(trim($park['name']))) ?></td>
+                            <td><?= strip_tags(htmlspecialchars(trim($park['location']))) ?></td>
+                            <td id="date"><?= strip_tags(htmlspecialchars(trim($park['date_established']))) ?></td>
+                            <td id="area"><?= strip_tags(htmlspecialchars(trim(number_format($park['area_in_acres'])))) ?></td>
+                            <td id="description"><?= strip_tags(htmlspecialchars(trim($park['park_description']))) ?></td>
                         </tr>
                     <?php endforeach; ?>
                     </tbody>
@@ -181,6 +190,20 @@ if (!empty ($_REQUEST)) {
         </h3>
         </div>
     </div>
+    <div class="container search">
+        <form class="form-group" method="GET" action="/national_parks.php">
+            <label for="input" class="col-xs-2 col-form-label">Number of Parks Per page<input class="form-control" type="number" min="0" placeholder="Parks Per Page" name="limit"></label>
+            <!-- <label for="select" class="col-xs-2 col-form-label">Sort Parks<select class="custom-select" type="text" placeholder="Parks Per Page" name="sort"> -->
+            <!-- <option selected>Sort By Name</option>
+            <option>Sort By Location</option>
+            <option>Sort By Size</option>
+            <option>Sort By Date Established</option>
+            </select>
+
+            </label> -->
+            <button type="submit" class="btn">Get Parks</button>
+        </form>
+    </div>
         <div class="container form">
             <form class="form-group" method="POST" action="/national_parks.php">
                 <h1 class="form-header">Add a Park</h1>
@@ -189,31 +212,31 @@ if (!empty ($_REQUEST)) {
                 <div class="form-group row">
                     <label for="example-text-input" class="col-xs-2 col-form-label">Park Name</label>
                     <div class="col-xs-10">
-                        <input class="form-control" type="text" placeholder="Park Name" id="name">
+                        <input class="form-control" type="text" placeholder="Park Name" name="name">
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="example-search-input" class="col-xs-2 col-form-label">Location</label>
                     <div class="col-xs-10">
-                        <input class="form-control" type="text" placeholder="Park Location (State)" id="location">
+                        <input class="form-control" type="text" placeholder="Park Location (State)" name="location">
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="example-email-input" class="col-xs-2 col-form-label">Date Established</label>
                     <div class="col-xs-10">
-                        <input class="form-control" type="date" placeholder="YYYY-mm-dd" id="date_established">
+                        <input class="form-control" type="date" placeholder="YYYY-mm-dd" name="date_established">
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="example-url-input" class="col-xs-2 col-form-label">Area of Park</label>
                     <div class="col-xs-10">
-                        <input class="form-control" type="number" placeholder="Park Acreage" id="area_in_acres">
+                        <input class="form-control" type="number" placeholder="Park Acreage" name="area_in_acres">
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="example-tel-input" class="col-xs-2 col-form-label">Park Description</label>
                     <div class="col-xs-10">
-                        <textarea class="form-control" type="textarea" placeholder="Describe the Park" id="park_description"></textarea>
+                        <textarea class="form-control" type="textarea" placeholder="Describe the Park" name="park_description"></textarea>
                     </div>
                 </div>
                 <button type="submit" class="btn btn-lg center-block">Submit</button>

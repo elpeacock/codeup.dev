@@ -21,7 +21,8 @@ $newTable = 'CREATE TABLE national_parks (
 	date_established DATE NOT NULL, 
 	area_in_acres DOUBLE NOT NULL, 
 	park_description TEXT NOT NULL,
-	PRIMARY KEY (id)
+	PRIMARY KEY (id),
+	UNIQUE (name, location)
 );';
 
 //execute the new table
