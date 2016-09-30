@@ -26,11 +26,14 @@ function pageController ($dbc) {
         $currentPage = 1;
     }
 
+    //allow the user to specify results per page
     if (isset($_GET['limit'])) {
         $limit = (int)strip_tags(htmlspecialchars(trim($_GET['limit'])));  
     } else {
         $limit = 4;
     }
+
+
     //offset maths
     $offset = ($currentPage - 1) * $limit;
 
@@ -55,28 +58,74 @@ function pageController ($dbc) {
 
 extract(pageController($dbc));
 
-//pull the post information from form
-if (Input::has('name') && Input::has('location') && Input::has('date_established') && Input::has('area_in_acres') && Input::has('park_description')) {
+$errors = [];
 
+// if input has all things from form
+//pull the post information from form
+try {
+    // if any input is empty throw an exception
+    if (!Input::has('name') || !Input::has('location') || !Input::has('date_established') || !Input::has('area_in_acres') || !Input::has('park_description')) {
+    
+        throw new Exception('Please fill out all input fields');
+        //this throws the error on page load, DUH! - fix me!!!!!
+    
+    } else {
+        // make variables and use getString and getNumber with try catch around each
+        try {
+            $addedName = strip_tags(htmlspecialchars(trim(Input::getString('name'))));
+        } catch (exception $e) {
+            $errors[] = $e->getMessage();
+        }
+
+        try {
+            $addedLocation = strip_tags(htmlspecialchars(trim(Input::getString('location'))));
+        } catch (exception $e) {
+            $errors[] = $e->getMessage();
+        }
+
+        try {
+            $addedDate = strip_tags(htmlspecialchars(trim(date('Y-m-d', strtotime(Input::getString('date_established'))))));
+        } catch (exception $e) {
+            $errors[] = $e->getMessage();
+        }
+
+        try {
+            $addedSize = strip_tags(htmlspecialchars(trim(Input::getNumber('area_in_acres'))));
+        } catch (exception $e) {
+            $errors[] = $e->getMessage();
+        }
+
+        try {
+            $addedDescription = strip_tags(htmlspecialchars(trim(Input::getString('park_description'))));
+        } catch (exception $e) {
+            $errors[] = $e->getMessage();
+        }
+    }
+ 
+} catch (exception $e) {
+    $errors[] = $e->getMessage();
+}
+
+// if errors is empty
+
+if (empty($errors)) {
+    // do insert statement with bindvalues
     //prepare statement to input info from post
     $insert = $dbc->prepare("INSERT INTO national_parks (name, location, date_established, area_in_acres, park_description) VALUES (:name, :location, :date_established, :area_in_acres, :park_description);");
+
     
     //insert values into database after stripping tags/special chars etc
-    $insert->bindValue(':name', Input::getString('name'), PDO::PARAM_STR);
-    $insert->bindValue(':location', Input::getString('location'), PDO::PARAM_STR);
-    $insert->bindValue(':date_established', date('Y-m-d', strtotime(Input::getString('date_established'))), PDO::PARAM_STR);
-    $insert->bindValue(':area_in_acres', Input::getNumber('area_in_acres'), PDO::PARAM_STR);
-    $insert->bindValue(':park_description', Input::getString('park_description'), PDO::PARAM_STR);
+    $insert->bindValue(':name', $addedName, PDO::PARAM_STR);
+    $insert->bindValue(':location', $addedLocation, PDO::PARAM_STR);
+    $insert->bindValue(':date_established', $addedDate, PDO::PARAM_STR);
+    $insert->bindValue(':area_in_acres', $addedSize, PDO::PARAM_STR);
+    $insert->bindValue(':park_description', $addedDescription, PDO::PARAM_STR);
 
-    $insert->execute();
-            
-
-    
+    $insert->execute();    
 }
 
 
-
-
+var_dump($errors);
 
 ?>
 
@@ -192,7 +241,13 @@ if (Input::has('name') && Input::has('location') && Input::has('date_established
     </div>
     <div class="container search">
         <form class="form-group" method="GET" action="/national_parks.php">
-            <label for="input" class="col-xs-2 col-form-label">Number of Parks Per page<input class="form-control" type="number" min="0" placeholder="Parks Per Page" name="limit"></label>
+            <label for="input" class="col-xs-2 col-form-label">Number of Parks Per page
+            <input class="form-control" 
+            type="number" 
+            min="0" 
+            placeholder="Parks Per Page" 
+            name="limit">
+            </label>
             <!-- <label for="select" class="col-xs-2 col-form-label">Sort Parks<select class="custom-select" type="text" placeholder="Parks Per Page" name="sort"> -->
             <!-- <option selected>Sort By Name</option>
             <option>Sort By Location</option>
@@ -210,33 +265,49 @@ if (Input::has('name') && Input::has('location') && Input::has('date_established
                 <br>
                 <br>
                 <div class="form-group row">
-                    <label for="example-text-input" class="col-xs-2 col-form-label">Park Name</label>
+                    <label for="name-input" class="col-xs-2 col-form-label">Park Name</label>
                     <div class="col-xs-10">
-                        <input class="form-control" type="text" placeholder="Park Name" name="name">
+                        <input class="form-control" 
+                        type="text" 
+                        placeholder="Park Name" 
+                        name="name">
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="example-search-input" class="col-xs-2 col-form-label">Location</label>
+                    <label for="location-input" class="col-xs-2 col-form-label">Location</label>
                     <div class="col-xs-10">
-                        <input class="form-control" type="text" placeholder="Park Location (State)" name="location">
+                        <input class="form-control" 
+                        type="text" 
+                        placeholder="Park Location (State)" 
+                        name="location">
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="example-email-input" class="col-xs-2 col-form-label">Date Established</label>
+                    <label for="date-input" class="col-xs-2 col-form-label">Date Established</label>
                     <div class="col-xs-10">
-                        <input class="form-control" type="date" placeholder="YYYY-mm-dd" name="date_established">
+                        <input class="form-control" 
+                        type="date" 
+                        placeholder="YYYY-mm-dd" 
+                        name="date_established">
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="example-url-input" class="col-xs-2 col-form-label">Area of Park</label>
+                    <label for="area-input" class="col-xs-2 col-form-label">Area of Park</label>
                     <div class="col-xs-10">
-                        <input class="form-control" type="number" placeholder="Park Acreage" name="area_in_acres">
+                        <input class="form-control" 
+                        type="number" 
+                        placeholder="Park Acreage" 
+                        name="area_in_acres">
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="example-tel-input" class="col-xs-2 col-form-label">Park Description</label>
+                    <label for="description-input" class="col-xs-2 col-form-label">Park Description</label>
                     <div class="col-xs-10">
-                        <textarea class="form-control" type="textarea" placeholder="Describe the Park" name="park_description"></textarea>
+                        <textarea class="form-control" 
+                        type="textarea" 
+                        placeholder="Describe the Park" 
+                        name="park_description">    
+                        </textarea>
                     </div>
                 </div>
                 <button type="submit" class="btn btn-lg center-block">Submit</button>
