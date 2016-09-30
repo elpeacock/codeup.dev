@@ -22,7 +22,7 @@ class Input
      * @param mixed $default default value to return if key not found
      * @return mixed value passed in request
      */
-    public static function get($key, $default = null)
+    public static function get($key)
     {
         // TODO: Fill in this function
         if (self::has($key)) {
@@ -34,30 +34,40 @@ class Input
         }
     }
 
-    public static function getString($key)
+    public static function getString($key, $min = 2, $max = 75)
     {
-        if (!self::has($key) && $default === null) {
-            throw new Exception ('Request does not contain $key');
+        
+        if (self::has($key) && !empty(self::get($key))) {
+            throw new outOfRangeException ('Please enter an input');
         } 
 
         if (!is_string(self::get($key)) || is_numeric(self::get($key))) {
-            throw new Exception ('$key given is not a string');
+            throw new invalidArgumentException ('input value is not valid');
+        }
+
+        if (strlen(self::get($key)) < $min || strlen(self::get($key)) > $max) {
+            throw new rangeException ('input length is out of range');
         }
         return $value = self::get($key);
     }
 
-    public static function getNumber($key)
+    public static function getNumber($key, $min = 0.1, $max = 1000000)
     {
         
-        if (!self::has($key)) {
-            throw new Exception ('Request does not contain $key');
+        if (self::has($key) && !empty(self::get($key))) {
+            throw new outOfRangeException ('Please enter an input');
         }
 
         if (!is_numeric(self::get($key))) {
-            throw new Exception ('the $value associated with $key given is not a number');
+            throw new invalidArgumentException ('input value given is not a number');
         }
 
+        if ((self::get($key)) < $min || (self::get($key)) > $max) {
+            throw new rangeException ('value given is out of range');
+        } 
+
         $value = self::has($key);
+        
         return floatval($value);
     }
     ///////////////////////////////////////////////////////////////////////////

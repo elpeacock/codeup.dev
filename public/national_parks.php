@@ -60,69 +60,105 @@ extract(pageController($dbc));
 
 $errors = [];
 
-// if input has all things from form
-//pull the post information from form
-try {
-    // if any input is empty throw an exception
-    if (!Input::has('name') || !Input::has('location') || !Input::has('date_established') || !Input::has('area_in_acres') || !Input::has('park_description')) {
-    
-        throw new Exception('Please fill out all input fields');
-        //this throws the error on page load, DUH! - fix me!!!!!
-    
-    } else {
-        // make variables and use getString and getNumber with try catch around each
-        try {
-            $addedName = strip_tags(htmlspecialchars(trim(Input::getString('name'))));
-        } catch (exception $e) {
-            $errors[] = $e->getMessage();
+// if form has been submitted
+if (!empty($_POST)) {
+    // try to pull the post information from form
+    try {
+        // if any input is empty throw an exception
+        if (Input::has('name') && Input::has('location') && Input::has('date_established') && Input::has('area_in_acres') && Input::has('park_description') ) {
+            // make variables and use getString and getNumber with try catch around each
+            try {
+                $addedName = strip_tags(htmlspecialchars(trim(Input::getString('name'))));
+            } catch (outOfRangeException $e) {
+                $errors[] = $e->getMessage();
+                echo 'Name is required';
+            } catch (invalidArgumentException $e) {
+                $errors[] = $e->getMessage();
+                echo 'enter a valid string';
+            } catch (rangeException $e) {
+                $errors[] = $e->getMessage();
+                echo 'name length is too short or too long';
+            }
+
+            try {
+                $addedLocation = strip_tags(htmlspecialchars(trim(Input::getString('location'))));
+            } catch (outOfRangeException $e) {
+                $errors[] = $e->getMessage();
+                echo 'Location is required';
+            } catch (invalidArgumentException $e) {
+                $errors[] = $e->getMessage();
+                echo 'enter a valid location';
+            } catch (rangeException $e) {
+                $errors[] = $e->getMessage();
+                echo 'name length is too short or too long';
+            }
+
+            try {
+                $addedDate = strip_tags(htmlspecialchars(trim(date('Y-m-d', strtotime(Input::getString('date_established'))))));
+            } catch (exception $e) {
+                $errors[] = $e->getMessage();
+            }
+
+            try {
+                $addedSize = strip_tags(htmlspecialchars(trim(Input::getNumber('area_in_acres'))));
+            } catch (outOfRangeException $e) {
+                $errors[] = $e->getMessage();
+                echo 'size of park is required';
+            } catch (invalidArgumentException $e) {
+                $errors[] = $e->getMessage();
+                echo 'size of park must be a number';
+            } catch (rangeException $e) {
+                $errors[] = $e->getMessage();
+                echo 'park size is too small or too large';
+            }
+
+            try {
+                $addedDescription = strip_tags(htmlspecialchars(trim(Input::getString('park_description'))));
+            } catch (outOfRangeException $e) {
+                $errors[] = $e->getMessage();
+                echo 'description is required';
+            } catch (invalidArgumentException $e) {
+                $errors[] = $e->getMessage();
+                echo 'enter a valid description';
+            } catch (rangeException $e) {
+                $errors[] = $e->getMessage();
+                echo 'length of description is too short or too long';
+            }
+            
+        } else {
+            
+            throw new Exception('Please fill out all input fields');
+
         }
 
-        try {
-            $addedLocation = strip_tags(htmlspecialchars(trim(Input::getString('location'))));
-        } catch (exception $e) {
-            $errors[] = $e->getMessage();
-        }
-
-        try {
-            $addedDate = strip_tags(htmlspecialchars(trim(date('Y-m-d', strtotime(Input::getString('date_established'))))));
-        } catch (exception $e) {
-            $errors[] = $e->getMessage();
-        }
-
-        try {
-            $addedSize = strip_tags(htmlspecialchars(trim(Input::getNumber('area_in_acres'))));
-        } catch (exception $e) {
-            $errors[] = $e->getMessage();
-        }
-
-        try {
-            $addedDescription = strip_tags(htmlspecialchars(trim(Input::getString('park_description'))));
-        } catch (exception $e) {
-            $errors[] = $e->getMessage();
-        }
+    } catch (exception $e) {
+        
+        $errors[] = $e->getMessage();
     }
- 
-} catch (exception $e) {
-    $errors[] = $e->getMessage();
-}
-
-// if errors is empty
-
-if (empty($errors)) {
-    // do insert statement with bindvalues
-    //prepare statement to input info from post
-    $insert = $dbc->prepare("INSERT INTO national_parks (name, location, date_established, area_in_acres, park_description) VALUES (:name, :location, :date_established, :area_in_acres, :park_description);");
-
     
-    //insert values into database after stripping tags/special chars etc
-    $insert->bindValue(':name', $addedName, PDO::PARAM_STR);
-    $insert->bindValue(':location', $addedLocation, PDO::PARAM_STR);
-    $insert->bindValue(':date_established', $addedDate, PDO::PARAM_STR);
-    $insert->bindValue(':area_in_acres', $addedSize, PDO::PARAM_STR);
-    $insert->bindValue(':park_description', $addedDescription, PDO::PARAM_STR);
+    // if errors is empty
+    if (empty($errors)) {
+        // do insert statement with bindvalues
+        //prepare statement to input info from post
+        $insert = $dbc->prepare("INSERT INTO national_parks (name, location, date_established, area_in_acres, park_description) VALUES (:name, :location, :date_established, :area_in_acres, :park_description);");
 
-    $insert->execute();    
+        
+        //insert values into database after stripping tags/special chars etc
+        $insert->bindValue(':name', $addedName, PDO::PARAM_STR);
+        $insert->bindValue(':location', $addedLocation, PDO::PARAM_STR);
+        $insert->bindValue(':date_established', $addedDate, PDO::PARAM_STR);
+        $insert->bindValue(':area_in_acres', $addedSize, PDO::PARAM_STR);
+        $insert->bindValue(':park_description', $addedDescription, PDO::PARAM_STR);
+
+        $insert->execute();    
+    }
+
 }
+        
+        
+
+     
+
 
 
 var_dump($errors);
@@ -310,7 +346,10 @@ var_dump($errors);
                         </textarea>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-lg center-block">Submit</button>
+                <button type="submit" 
+                name="submit"
+                class="btn btn-lg center-block">Submit
+                </button>
             </form>
         </div>
 
