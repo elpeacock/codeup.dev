@@ -57,8 +57,14 @@ abstract class Model
     public function __get($name)
     {
         // @TODO: Return the value from attributes for $name if it exists, else return null
-        if (condition) {
-            # code...
+        if (array_key_exists($name, $attributes)) {
+            
+            return $this->attributes[$name];
+
+        } else {
+            
+            return null;
+            
         }
 
     }
