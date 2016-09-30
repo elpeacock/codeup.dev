@@ -40,7 +40,7 @@ class Input
             throw new Exception ('Request does not contain $key');
         } 
 
-        if (!is_string(self::get($key)) && !is_numeric (self::get($key, $defualt))) {
+        if (!is_string(self::get($key)) || is_numeric(self::get($key))) {
             throw new Exception ('$key given is not a string');
         }
         return $value = self::get($key);
