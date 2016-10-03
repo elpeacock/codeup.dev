@@ -22,7 +22,7 @@ class Input
      * @param mixed $default default value to return if key not found
      * @return mixed value passed in request
      */
-    public static function get($key)
+    public static function get($key, $default = null)
     {
         // TODO: Fill in this function
         if (self::has($key)) {
@@ -30,45 +30,50 @@ class Input
             return $_REQUEST[$key];
         } else {
             //if key is not set, return null
-            return null;
+            return $default;
         }
     }
 
-    public static function getString($key, $min = 2, $max = 75)
+    public static function getString($key, $default = null, $min = 2, $max = 75)
     {
         
-        if (self::has($key) && !empty(self::get($key))) {
+        if (!self::has($key) && $default === null) {
+            
             throw new outOfRangeException ('Please enter an input');
-        } 
-
-        if (!is_string(self::get($key)) || is_numeric(self::get($key))) {
-            throw new invalidArgumentException ('input value is not valid');
-        }
-
-        if (strlen(self::get($key)) < $min || strlen(self::get($key)) > $max) {
+        
+        } else if (!is_string(self::get($key)) || is_numeric(self::get($key))) {
+            
+            throw new invalidArgumentException ('input must be a string and cannot be numeric');
+        
+        } else if (strlen(self::get($key)) < $min || strlen(self::get($key)) > $max) {
+            
             throw new rangeException ('input length is out of range');
-        }
-        return $value = self::get($key);
+        
+        } else 
+            
+            return $value = self::get($key);
     }
 
-    public static function getNumber($key, $min = 0.1, $max = 1000000)
+    public static function getNumber($key, $defualt = null, $min = 0.1, $max = 1000000)
     {
         
-        if (self::has($key) && !empty(self::get($key))) {
+        if (!self::has($key) && $defualt === null) {
+            
             throw new outOfRangeException ('Please enter an input');
-        }
 
-        if (!is_numeric(self::get($key))) {
+        } else if (!is_numeric(self::get($key))) {
+            
             throw new invalidArgumentException ('input value given is not a number');
-        }
-
-        if ((self::get($key)) < $min || (self::get($key)) > $max) {
-            throw new rangeException ('value given is out of range');
-        } 
-
-        $value = self::has($key);
         
-        return floatval($value);
+        } else if ((self::get($key)) < $min || (self::get($key)) > $max) {
+            
+            throw new rangeException ('value given is out of range');
+        
+        } else
+
+            $value = self::get($key);
+        
+            return floatval($value);
     }
     ///////////////////////////////////////////////////////////////////////////
     //                      DO NOT EDIT ANYTHING BELOW!!                     //
