@@ -11,9 +11,9 @@ class User extends Model
     protected function insert()
     {
         // @TODO: Use prepared statements to ensure data security
-        $query = 'INSERT INTO users (username, password, email) VALUES (:username, :password, :email);';
+        $insertQuery = 'INSERT INTO users (username, password, email) VALUES (:username, :password, :email);';
 
-        $stmt = self::$dbc->prepare($query);
+        $stmt = self::$dbc->prepare($insertQuery);
 
         // @TODO: You will need to iterate through all the attributes to build the prepared query
         foreach ($this->attributes as $index => $attribute) {
@@ -40,9 +40,9 @@ class User extends Model
     {
         // @TODO: Use prepared statements to ensure data security
 
-        $query = 'UPDATE users SET username = :username, password = :password, email = :email;';
+        $updateQuery = 'UPDATE users SET username = :username, password = :password, email = :email;';
 
-        $stmt = self::$dbc->prepare($query);
+        $stmt = self::$dbc->prepare($updateQuery);
 
         // @TODO: You will need to iterate through all the attributes to build the prepared query
         foreach ($this->attributes as $index => $attribute) {
@@ -67,8 +67,19 @@ class User extends Model
         self::dbConnect();
 
         // @TODO: Create select statement using prepared statements
+        $findQuery = "SELECT * FROM users WHERE id = :id;";
+
+        $stmt = self::$dbc->prepare($findQuery);
+
+        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+
+        $stmt->execute();
+
+        $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         // @TODO: Store the result in a variable named $result
+
+        $result = $stmt->fetch();
 
         // The following code will set the attributes on the calling object based on the result variable's contents
         $instance = null;
