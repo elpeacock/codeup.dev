@@ -99,5 +99,19 @@ class User extends Model
         self::dbConnect();
 
         // @TODO: Learning from the find method, return all the matching records
+        $allQuery = 'SELECT * FROM users;';
+
+        $stmt = self::$dbc->prepare($allQuery);
+
+        $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $result = $stmt->fetch();
+
+        // The following code will set the attributes on the calling object based on the result variable's contents
+        $instance = null;
+        if ($result) {
+            $instance = new static($result);
+        }
+        return $instance;
     }
 }
