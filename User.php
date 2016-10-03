@@ -8,7 +8,7 @@ require_once __DIR__ . '/Model.php';
 class User extends Model
 {
     /** Insert a new entry into the database */
-    protected function insert($dbc, $attributes)
+    protected function insert()
     {
         // @TODO: Use prepared statements to ensure data security
         $query = 'INSERT INTO users (username, password, email) VALUES (:username, :password, :email);';
@@ -16,17 +16,23 @@ class User extends Model
         $stmt = self::$dbc->prepare($query);
 
         // @TODO: You will need to iterate through all the attributes to build the prepared query
-        foreach ($this->attributes as $attribute) {
+        foreach ($this->attributes as $index => $attribute) {
             
-            $stmt->bindValue(':username, $username, PDO::PARAM_STR');
+            $stmt->bindValue(":$index", $attribute, PDO::PARAM_STR);
             
-            $stmt->bindValue(':password, $password, PDO::PARAM_STR');
+            // $stmt->bindValue(':password, $password, PDO::PARAM_STR');
 
-            $stmt->bindValue(':email, $email, PDO::PARAM_STR');
+            // $stmt->bindValue(':email, $email, PDO::PARAM_STR');
+            
         }
+
+        $stmt->execute();
 
         // @TODO: After the insert, add the id back to the attributes array
         //        so the object properly represents a DB record
+
+        $this->attributes['id'] = self::$dbc->lastInsertId();
+
     }
 
     /** Update existing entry in the database */
@@ -34,7 +40,18 @@ class User extends Model
     {
         // @TODO: Use prepared statements to ensure data security
 
+        $query = 'UPDATE users SET username = :username, password = :password, email = :email;';
+
+        $stmt = self::$dbc->prepare($query);
+
         // @TODO: You will need to iterate through all the attributes to build the prepared query
+        foreach ($this->attributes as $index => $attribute) {
+
+            $stmt->bindValue(":$index", $attribute, PDO::PARAM_STR);
+
+        }
+
+        $stmt->execute();
     }
 
     /**
