@@ -70,58 +70,58 @@ if (!empty($_POST)) {
             try {
                 $addedName = strip_tags(htmlspecialchars(trim(Input::getString('name'))));
             } catch (outOfRangeException $e) {
-                $errors[] = $e->getMessage();
+                $errors['name'] = $e->getMessage();
                 echo 'Name is required';
             } catch (invalidArgumentException $e) {
-                $errors[] = $e->getMessage();
+                $errors['name'] = $e->getMessage();
                 echo 'enter a valid string';
             } catch (rangeException $e) {
-                $errors[] = $e->getMessage();
+                $errors['name'] = $e->getMessage();
                 echo 'name length is too short or too long';
             }
 
             try {
                 $addedLocation = strip_tags(htmlspecialchars(trim(Input::getString('location'))));
             } catch (outOfRangeException $e) {
-                $errors[] = $e->getMessage();
+                $errors['location'] = $e->getMessage();
                 echo 'Location is required';
             } catch (invalidArgumentException $e) {
-                $errors[] = $e->getMessage();
+                $errors['location'] = $e->getMessage();
                 echo 'enter a valid location';
             } catch (rangeException $e) {
-                $errors[] = $e->getMessage();
+                $errors['location'] = $e->getMessage();
                 echo 'name length is too short or too long';
             }
 
             try {
                 $addedDate = strip_tags(htmlspecialchars(trim(date('Y-m-d', strtotime(Input::getString('date_established'))))));
             } catch (exception $e) {
-                $errors[] = $e->getMessage();
+                $errors['date_established'] = $e->getMessage();
             }
 
             try {
                 $addedSize = strip_tags(htmlspecialchars(trim(Input::getNumber('area_in_acres'))));
             } catch (outOfRangeException $e) {
-                $errors[] = $e->getMessage();
+                $errors['area_in_acres'] = $e->getMessage();
                 echo 'size of park is required';
             } catch (invalidArgumentException $e) {
-                $errors[] = $e->getMessage();
+                $errors['area_in_acres'] = $e->getMessage();
                 echo 'size of park must be a number';
             } catch (rangeException $e) {
-                $errors[] = $e->getMessage();
+                $errors['area_in_acres'] = $e->getMessage();
                 echo 'park size is too small or too large';
             }
 
             try {
                 $addedDescription = strip_tags(htmlspecialchars(trim(Input::getString('park_description'))));
             } catch (outOfRangeException $e) {
-                $errors[] = $e->getMessage();
+                $errors['park_description'] = $e->getMessage();
                 echo 'description is required';
             } catch (invalidArgumentException $e) {
-                $errors[] = $e->getMessage();
+                $errors['park_description'] = $e->getMessage();
                 echo 'enter a valid description';
             } catch (rangeException $e) {
-                $errors[] = $e->getMessage();
+                $errors['park_description'] = $e->getMessage();
                 echo 'length of description is too short or too long';
             }
             
@@ -150,18 +150,12 @@ if (!empty($_POST)) {
         $insert->bindValue(':area_in_acres', $addedSize, PDO::PARAM_STR);
         $insert->bindValue(':park_description', $addedDescription, PDO::PARAM_STR);
 
-        $insert->execute();    
+        $insert->execute();
+        header('Location: /national_parks.php');
+        die();
     }
 
 }
-        
-        
-
-     
-
-
-
-var_dump($errors);
 
 ?>
 
@@ -306,8 +300,12 @@ var_dump($errors);
                         <input class="form-control" 
                         type="text" 
                         placeholder="Park Name" 
-                        name="name">
+                        name="name"
+                        value="<?= Input::get('name') ?>">
                     </div>
+                    <?php if(isset($errors['name'])) : ?>
+                        <p><?= $errors['name']; ?></p>
+                    <?php endif; ?>
                 </div>
                 <div class="form-group row">
                     <label for="location-input" class="col-xs-2 col-form-label">Location</label>
@@ -315,8 +313,12 @@ var_dump($errors);
                         <input class="form-control" 
                         type="text" 
                         placeholder="Park Location (State)" 
-                        name="location">
+                        name="location"
+                        value="<?= Input::get('location') ?>">
                     </div>
+                    <?php if(isset($errors['location'])) : ?>
+                        <p><?= $errors['location']; ?></p>
+                    <?php endif; ?>
                 </div>
                 <div class="form-group row">
                     <label for="date-input" class="col-xs-2 col-form-label">Date Established</label>
@@ -324,27 +326,38 @@ var_dump($errors);
                         <input class="form-control" 
                         type="date" 
                         placeholder="YYYY-mm-dd" 
-                        name="date_established">
+                        name="date_established"
+                        value="<?= Input::get('date_established') ?>">
                     </div>
+                    <?php if(isset($errors['date_established'])) : ?>
+                        <p><?= $errors['date_established']; ?></p>
+                    <?php endif; ?>
                 </div>
                 <div class="form-group row">
                     <label for="area-input" class="col-xs-2 col-form-label">Area of Park</label>
                     <div class="col-xs-10">
                         <input class="form-control" 
-                        type="number" 
+                        type="text" 
                         placeholder="Park Acreage" 
-                        name="area_in_acres">
+                        name="area_in_acres"
+                        value="<?= Input::get('area_in_acres') ?>">
                     </div>
+                    <?php if(isset($errors['area_in_acres'])) : ?>
+                        <p><?= $errors['area_in_acres']; ?></p>
+                    <?php endif; ?>
                 </div>
                 <div class="form-group row">
                     <label for="description-input" class="col-xs-2 col-form-label">Park Description</label>
                     <div class="col-xs-10">
                         <textarea class="form-control" 
-                        type="textarea" 
                         placeholder="Describe the Park" 
-                        name="park_description">    
+                        name="park_description"
+                        value="<?= Input::get('park_description') ?>">    
                         </textarea>
                     </div>
+                    <?php if(isset($errors['park_description'])) : ?>
+                        <p><?= $errors['park_description']; ?></p>
+                    <?php endif; ?>
                 </div>
                 <button type="submit" 
                 name="submit"
