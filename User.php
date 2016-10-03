@@ -1,5 +1,8 @@
 <?php
-
+define('DB_HOST', '127.0.0.1');
+define('DB_NAME', 'join_test_db');
+define('DB_USER', 'codeup');
+define('DB_PASS', 'vagrant');
 
 // __DIR__ is a *magic constant* with the directory path containing this file.
 // This allows us to correctly require_once Model.php, no matter where this file is being required from.
@@ -11,7 +14,7 @@ class User extends Model
     protected function insert()
     {
         // @TODO: Use prepared statements to ensure data security
-        $insertQuery = 'INSERT INTO users (username, password, email) VALUES (:username, :password, :email);';
+        $insertQuery = 'INSERT INTO users (name, password, email) VALUES (:name, :password, :email)';
 
         $stmt = self::$dbc->prepare($insertQuery);
 
@@ -40,7 +43,7 @@ class User extends Model
     {
         // @TODO: Use prepared statements to ensure data security
 
-        $updateQuery = 'UPDATE users SET username = :username, password = :password, email = :email;';
+        $updateQuery = 'UPDATE users SET name = :name, password = :password, email = :email';
 
         $stmt = self::$dbc->prepare($updateQuery);
 
@@ -114,4 +117,31 @@ class User extends Model
         }
         return $instance;
     }
+
+    public function delete()
+    {
+        $deleteQuery = 'DELETE FROM users WHERE id = :id';
+
+        $stmt = self::$dbc->prepare($deleteQuery);
+
+        $stmt->bindValue(':id', $this->attributes['id'], PDO::PARAM_INT);
+
+        $stmt->execute();
+    }
+
 }
+
+$user = new User();
+
+// Set all the properties of the model
+// These property names are taken from the column names in the database
+$user->name = 'liz';
+$user->email = 'liz@email.com';
+$user->password = 'lizspassword';
+
+// Add the new record to the database. Save will do either insert or update
+// depending on whether the record already exists in the database.
+$user->save();
+
+// We do not need to get the last inserted id because the save method handles that for us
+

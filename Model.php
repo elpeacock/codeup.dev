@@ -40,10 +40,10 @@ abstract class Model
                 // define('DB_PASS', 'my_password_for_the_database_to_use');
 
             // Get new instance of PDO object ->hafta override the default value of null defined above so use static:: instead of self::
-            static::$dbc = new PDO('mysql:host=' . DB_HOST . ';dbname=' . DB_NAME, DB_USER, DB_PASS);
-
+            $dbc = new PDO('mysql:host=' . DB_HOST . ';dbname=' . DB_NAME, DB_USER, DB_PASS);
+            self::$dbc = $dbc;
             // Tell PDO to throw exceptions on error ->again hafta override the default value of null use static:: not self::
-            static::$dbc->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            self::$dbc->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         }
     }
 
@@ -78,23 +78,23 @@ abstract class Model
     public function __set($name, $value)
     {
         // @TODO: Store name/value pair in attributes array
-        $value = $this->attributes[$name]
+        $this->attributes[$name] = $value;
     }
 
     /** Store the object in the database */
     public function save()
     {
         // @TODO: Ensure there are values in the attributes array before attempting to save
-        if (!empty($attributes)) {
+        if (!empty($this->attributes)) {
             // @TODO: Call the proper database method: if the `id` is set this is an update, else it is a insert
-            if isset($this->attributes['id']) {
+            if (isset($this->attributes['id'])) {
                 
                 $this->update();
 
             } else {
                 
                 $this->insert();
-                
+
             }
         }
 
