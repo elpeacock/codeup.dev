@@ -31,8 +31,9 @@
                 // if the last key is reached, activate
                 if (i == konamiCode.length)
                     activated();
-                } else
+                } else {
                     i = 0;
+                }
         });
 
         function activated() {
