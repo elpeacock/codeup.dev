@@ -33,14 +33,16 @@
               </nav>
             </div>
           </div>
+          
 
-          <div class="inner cover">
+          <div class="cover-content">
             <h1 class="cover-heading">Elizabeth Peacock</h1>
             <p class="lead">Human. Full-stack web developer. Adventurer. Outdoor enthusiast. Lover of books. Fueled by coffee. </p>
             <p>
               <a href="http://codeup.dev/resume.php" class="btn btn-lg btn-default">Learn More</a>
             </p>
           </div>
+
 
           <div class="mastfoot">
             <div class="inner">
