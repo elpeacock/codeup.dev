@@ -1,16 +1,22 @@
 <?php
 
-require_once "../input.php";
+// require_once "../input.php";
+require "functions.php";
 
 function pageController()
 {
     $data = [];
 
-    if (Input::has('value')) {
-        $data['value'] = Input::get('value');
+    if (inputHas('value')) {
+        $data['value'] = inputGet('value');
     } else {
         $data['value'] = 0;
     }
+    // if (Input::has('value')) {
+    //     $data['value'] = Input::get('value');
+    // } else {
+    //     $data['value'] = 0;
+    // }
     return $data;
     
 }
@@ -54,8 +60,8 @@ extract(pageController());
 <body>
     <div class="container">
         <h1>Pong's turn!</h1>
-        <h1>Volley count: <?= $value ?></h1>
-        <h2 class="col-md-6"><a href="ping.php?value=<?= $value + 1 ?>">hit</a></h2>
+        <h1>Volley count: <?= escape($value) ?></h1>
+        <h2 class="col-md-6"><a href="ping.php?value=<?= escape($value + 1) ?>">hit</a></h2>
         <h2 class="col-md-6"><a href="ping.php?value=0">miss</a></h2>
 
 
