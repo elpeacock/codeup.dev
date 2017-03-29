@@ -1,5 +1,5 @@
 <?php
-// session_start();
+session_start();
 
 // require_once '../Auth.php';
 
@@ -10,17 +10,17 @@
 //     Auth::attempt($_REQUEST['username'],$_REQUEST['password']);
 // }
 
-
 $message = 'Enter your login info';
 
 if (!empty($_GET) || !empty($_POST)) {                                                  //check to see if form has been submitted
 
     if (($_POST['username'] === 'guest') && ($_POST['password'] === 'password')) {      //check the name + password match 
-        // $_SESSION['sessionId'] = session_id();                                          //assigning session id on log in
-        // $_SESSION['loggedInUser'] = $_POST['username'];                                 //assigning username to session on log in 
-        // if (isset($_SESSION['loggedInUser'])) {                                         //checking if user is logged in
+        $_SESSION['sessionId'] = session_id();                                          //assigning session id on log in
+        $_SESSION['loggedInUser'] = htmlspecialchars(strip_tags($_POST['username']));   //assigning username to session on log in 
+        if (isset($_SESSION['loggedInUser'])) {                                         //checking if user is logged in
             header('location: /authorized.php');                                        //logged in user = redirect to authpg
-            die;                                                                        //kill php after redirect
+            die; 
+        }                                                                       //kill php after redirect
 
     } else {
         echo $message = "Login failed. Try again";                                      //not logged in = resend to login/show error 

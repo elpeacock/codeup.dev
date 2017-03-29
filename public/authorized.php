@@ -3,7 +3,7 @@
 session_start();
 
 //bring in the Auth class
-require_once '../Auth.php';
+// require_once '../Auth.php';
 
 
 function pageController () {
@@ -15,7 +15,8 @@ function pageController () {
         die;                                                
     }         
     //if logged in display username on welcome
-    return Auth::user();                                   
+    return $_SESSION;
+    // return Auth::user();                                   
 }
 
 extract(pageController());
@@ -54,7 +55,7 @@ extract(pageController());
 <body>
     <div class="container">
         <div class="holdTheHeaders">
-            <h1>Proceed <?= $username ?> ....</h1>
+            <h1>Proceed <?= $loggedInUser ?> ....</h1>
             <h2>You have been authorized</h2>
         </div>
         <form method="post" action="/logout.php">
