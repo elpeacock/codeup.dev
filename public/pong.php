@@ -1,22 +1,22 @@
 <?php
 
-// require_once "../input.php";
-require_once "functions.php";
+require_once "../input.php";
+// require_once "functions.php";
 
 function pageController()
 {
     $data = [];
 
-    if (inputHas('value')) {
-        $data['value'] = inputGet('value');
-    } else {
-        $data['value'] = 0;
-    }
-    // if (Input::has('value')) {
-    //     $data['value'] = Input::get('value');
+    // if (inputHas('value')) {
+    //     $data['value'] = inputGet('value');
     // } else {
     //     $data['value'] = 0;
     // }
+    if (Input::has('value')) {
+        $data['value'] = Input::get('value');
+    } else {
+        $data['value'] = 0;
+    }
     return $data;
     
 }
