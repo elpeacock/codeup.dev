@@ -1,6 +1,7 @@
 <?php
 //require Log class so we can log info/errors about log in
 require_once 'Log.php';
+require_once 'Input.php';
 //create Auth class
 class Auth
 {
@@ -26,14 +27,14 @@ class Auth
             //assign username to the session on successful log in
             $_SESSION['loggedInUser'] = $username;
             //checks if the user is already logged in
-            if (isset($_SESSION['loggedInUser'])) {          
+            if (Auth::check() == true) {          
                 //log login info
                 $LogObject->info("User {$username} is logged in");   
                 //if user is successfullly logged in -> redirect them to the authorized page
                 header('location: /authorized.php');
                 //ALWAYS KILL THE SCRIPTS AFTER A REDIRECT
                 die;
-            }
+            } 
         } else {
             //if user is not logged in/log in failed, stay on log in page & log an error in the log
             $LogObject->error("User {$username} login failed");
@@ -52,9 +53,9 @@ class Auth
         //if not logged in, return false & redirect to login_form.php
         } else {
             return false;
-            header('location: /login_form.php');                
+            // header('location: /login_form.php');                
             //ALWAYS KILL THE SCRIPTS AFTER A REDIRECT
-            die;
+            // die;
             
         }
 
@@ -70,11 +71,11 @@ class Auth
         // clear $_SESSION array
         session_unset();
 
-        // delete session data on the server
-        session_destroy();
-
         // ensure client is sent a new session cookie
         session_regenerate_id();
+
+        // delete session data on the server
+        session_destroy();
 
         // start a new session - session_destroy() ended our previous session so
         // if we want to store any new data in $_SESSION we must start a new one

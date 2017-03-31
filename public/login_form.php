@@ -1,31 +1,38 @@
 <?php
 session_start();
 
-// require_once '../Auth.php';
+require_once '../Auth.php';
+require_once '../Input.php';
 
-// //check to see if the form has been submitted
-// if (!empty($_REQUEST)) 
-// {
-//     //call Auth class attempt fxn
-//     Auth::attempt($_REQUEST['username'],$_REQUEST['password']);
-// }
+//check to see if the form has been submitted
+if (Input::has('username') && Input::has('password')) 
+{
+    //call Auth class attempt fxn
+    Auth::attempt(Input::get('username'), Input::get('password') );
+}
+
+// check if the logged in user already exists if so send to authorized.php
+if (Auth::check() == true) {
+    header('location: authorized.php');
+    die;
+}
 
 $message = 'Enter your login info';
 
-if (!empty($_GET) || !empty($_POST)) {                                                  //check to see if form has been submitted
+// if (!empty($_GET) || !empty($_POST)) {                                                  //check to see if form has been submitted
 
-    if (($_POST['username'] === 'guest') && ($_POST['password'] === 'password')) {      //check the name + password match 
-        $_SESSION['sessionId'] = session_id();                                          //assigning session id on log in
-        $_SESSION['loggedInUser'] = htmlspecialchars(strip_tags($_POST['username']));   //assigning username to session on log in 
-        if (isset($_SESSION['loggedInUser'])) {                                         //checking if user is logged in
-            header('location: /authorized.php');                                        //logged in user = redirect to authpg
-            die; 
-        }                                                                       //kill php after redirect
+//     if (($_POST['username'] === 'guest') && ($_POST['password'] === 'password')) {      //check the name + password match 
+//         $_SESSION['sessionId'] = session_id();                                          //assigning session id on log in
+//         $_SESSION['loggedInUser'] = htmlspecialchars(strip_tags($_POST['username']));   //assigning username to session on log in 
+//         if (isset($_SESSION['loggedInUser'])) {                                         //checking if user is logged in
+//             header('location: /authorized.php');                                        //logged in user = redirect to authpg
+//             die; 
+//         }                                                                       //kill php after redirect
 
-    } else {
-        echo $message = "Login failed. Try again";                                      //not logged in = resend to login/show error 
-    }
-}
+//     } else {
+//         echo $message = "Login failed. Try again";                                      //not logged in = resend to login/show error 
+//     }
+// }
 
 
 ?>
